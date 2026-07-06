@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Plus Jakarta Sans',sans-serif;
+
+}
+
+.container-custom{
+
+    @apply max-w-7xl mx-auto px-6 lg:px-10;
+
+}
+
+.section{
+
+    @apply py-24;
+
+}
+
+.btn-primary{
+
+    @apply bg-blue-700 hover:bg-blue-800 text-white px-8 py-4 rounded-xl duration-300;
+
+}
+
+.btn-outline{
+
+    @apply border border-white text-white px-8 py-4 rounded-xl hover:bg-white hover:text-black duration-300;
+
+}
+
+nav a{
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#D4AF37;
+
+}
+
+.justify-text {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+@utility text-justify {
+    text-align: justify;
+}
