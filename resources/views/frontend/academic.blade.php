@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
-@section('Akademik')
+@section('title', $page['title'])
 
 @section('content')
 
-<h1>Akademik</h1>
+@include('components.academic.hero')
+
+@include('components.academic.documents')
 
 @endsection

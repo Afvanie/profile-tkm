@@ -8,6 +8,13 @@ use App\Http\Controllers\Frontend\LecturerController;
 use App\Http\Controllers\Frontend\AcademicController;
 use App\Http\Controllers\Frontend\FacilityController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\LecturerStaffController;
+use App\Http\Controllers\Admin\LecturerStaffController as AdminLecturerStaffController;
+use App\Http\Controllers\Admin\AcademicDocumentController as AdminAcademicDocumentController;
+
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -20,3 +27,40 @@ Route::get('/academic', [AcademicController::class, 'index'])->name('academic');
 Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::get('/lecturers', [LecturerStaffController::class, 'index'])->name('lecturers');
+
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::resource('lecturer-staff', AdminLecturerStaffController::class)
+//         ->except(['show']);
+//     Route::resource('academic-documents', AdminAcademicDocumentController::class)
+//     ->except(['show']);
+// });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
+
+    Route::middleware('admin.auth')->group(function () {
+
+        Route::get('/', function () {
+            return redirect()->route('admin.lecturer-staff.index');
+        })->name('dashboard');
+
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+        Route::resource('lecturer-staff', AdminLecturerStaffController::class)
+            ->except(['show']);
+
+        Route::resource('academic-documents', AdminAcademicDocumentController::class)
+            ->except(['show']);
+
+    });
+
+});
+
+Route::get('/academic', [AcademicController::class, 'index'])->name('academic');
+
+
+Route::get('/academic/{slug}', [AcademicController::class, 'page'])->name('academic.page');

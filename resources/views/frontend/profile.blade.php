@@ -1,9 +1,22 @@
 @extends('layouts.app')
 
-@section('title','Profil TOE')
+@section('title', 'Profile TOE')
 
 @section('content')
 
-<h1>Profil TOE</h1>
+@include('components.profile.hero')
+
+@include('components.profile.overview')
+
+@include('components.profile.history')
+
+@include('components.profile.vision-mission')
+
+@include('components.profile.ppm')
+
+@include('components.profile.cpl')
+
+@include('components.profile.accreditation')
+
 
 @endsection

@@ -8,4 +8,5 @@
 @include('components.home.statistics')
 @include('components.home.about')
 
+
 @endsection

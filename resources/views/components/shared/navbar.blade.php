@@ -14,7 +14,7 @@
 
                 <div class="hidden lg:block">
                     <h2 class="font-bold text-xl">PROGRAM STUDI TEKNIK OTOMOTIF ELEKTRONIK</h2>
-                    <p class="text-sm text-white/80">POLINEMA</p>
+                    <p class="text-sm text-x1/80">POLINEMA</p>
                 </div>
 
             </a>
@@ -54,11 +54,30 @@
                         class="absolute left-0 top-full mt-4 w-56 bg-white text-black rounded-lg shadow-lg
                         opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
 
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Pedoman Akademik</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Kalender Akademik</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Kurikulum</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Jadwal Kuliah</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Laporan Ketercapaian</a>
+                            <a href="{{ route('academic.page', 'pedoman-akademik') }}"
+                            class="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                                Pedoman Akademik
+                            </a>
+
+                            <a href="{{ route('academic.page', 'kalender-akademik') }}"
+                            class="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                                Kalender Akademik
+                            </a>
+
+                            <a href="{{ route('academic.page', 'kurikulum') }}"
+                            class="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                                Kurikulum
+                            </a>
+
+                            <a href="{{ route('academic.page', 'jadwal-kuliah') }}"
+                            class="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                                Jadwal Kuliah
+                            </a>
+
+                            <a href="{{ route('academic.page', 'laporan-ketercapaian') }}"
+                            class="block px-4 py-3 text-slate-700 hover:bg-blue-50 hover:text-blue-700">
+                                Laporan Ketercapaian
+                            </a>
 
                     </div>
 

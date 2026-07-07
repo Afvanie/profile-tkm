@@ -35,3 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init({
+    duration: 900,
+    once: true,
+    offset: 100,
+    easing: 'ease-out-cubic',
+});
