@@ -34,20 +34,20 @@
                 <div class="w-24 h-1 bg-yellow-400 rounded-full mt-6 mb-8"></div>
 
                 <p class="text-slate-600 leading-8 text-justify">
-                    Program Studi D-IV Teknik Otomotif Elektronik Politeknik Negeri
-                    Malang berhasil meraih akreditasi “Unggul” dari LAM Teknik.
-                    Pencapaian ini menjadi bukti komitmen Program Studi dalam
-                    menjaga mutu pendidikan, kurikulum, sumber daya manusia,
-                    penelitian, pengabdian kepada masyarakat, serta pengembangan
-                    kompetensi lulusan.
+                    Program Studi D-III Teknik Mesin Politeknik Negeri Malang telah memperoleh
+                    akreditasi dengan peringkat <strong>Unggul</strong> dari Lembaga Akreditasi
+                    Mandiri Program Studi Keteknikan atau <strong>LAM Teknik</strong>. Akreditasi ini
+                    ditetapkan berdasarkan Keputusan LAM Teknik Nomor
+                    <strong>0136/SK/LAM Teknik/VD3/XII/2022</strong>.
                 </p>
 
                 <p class="mt-6 text-slate-600 leading-8 text-justify">
-                    Akreditasi ini menunjukkan bahwa Program Studi TOE Polinema
-                    memiliki kualitas penyelenggaraan pendidikan yang diakui secara
-                    nasional dan terus berkomitmen menghasilkan lulusan yang
-                    profesional, kompeten, serta siap menghadapi perkembangan
-                    teknologi otomotif modern.
+                    Sertifikat akreditasi ini berlaku mulai tanggal
+                    <strong>21 Desember 2022</strong> sampai dengan
+                    <strong>20 Desember 2027</strong>. Capaian ini menjadi bukti komitmen Program Studi
+                    D-III Teknik Mesin dalam menjaga mutu pendidikan vokasi, pengembangan kurikulum,
+                    sumber daya manusia, sarana prasarana, serta relevansi lulusan dengan kebutuhan
+                    dunia industri.
                 </p>
 
                 {{-- Info --}}
@@ -84,7 +84,7 @@
                         </p>
 
                         <h3 class="mt-2 text-2xl font-bold text-blue-700">
-                            2023-2028
+                            2022-2027
                         </h3>
 
                     </div>

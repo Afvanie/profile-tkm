@@ -154,27 +154,17 @@
                     data-aos-delay="300">
                 </div>
 
-                <p
-                    class="text-gray-600 leading-8 text-justify"
-                    data-aos="fade-up"
-                    data-aos-delay="400">
-
-                    Program Studi Teknik Mesin pada Program Diploma Tiga Politeknik Negeri Malang
-                    telah memperoleh akreditasi dengan peringkat <strong>Unggul</strong> dari
-                    Lembaga Akreditasi Mandiri Program Studi Keteknikan atau
-                    <strong>LAM Teknik</strong>.
-
-                </p>
 
                 <p
                     class="mt-6 text-gray-600 leading-8 text-justify"
                     data-aos="fade-up"
                     data-aos-delay="600">
 
-                    Akreditasi ini ditetapkan berdasarkan Keputusan LAM Teknik Nomor
-                    <strong>0136/SK/LAM Teknik/VD3/XII/2022</strong>. Sertifikat akreditasi
-                    berlaku mulai tanggal <strong>21 Desember 2022</strong> sampai dengan
-                    <strong>20 Desember 2027</strong>.
+                    Program Studi D-III Teknik Mesin Politeknik Negeri Malang telah memperoleh
+                    akreditasi dengan peringkat <strong>Unggul</strong> dari Lembaga Akreditasi
+                    Mandiri Program Studi Keteknikan atau <strong>LAM Teknik</strong>. Akreditasi ini
+                    ditetapkan berdasarkan Keputusan LAM Teknik Nomor
+                    <strong>0136/SK/LAM Teknik/VD3/XII/2022</strong>.
 
                 </p>
 
@@ -183,10 +173,12 @@
                     data-aos="fade-up"
                     data-aos-delay="700">
 
-                    Capaian akreditasi Unggul menjadi bentuk pengakuan terhadap mutu
-                    penyelenggaraan pendidikan vokasi di Program Studi D-III Teknik Mesin,
-                    baik dari aspek pembelajaran, kurikulum, sumber daya manusia, sarana
-                    prasarana, maupun relevansi lulusan dengan kebutuhan dunia industri.
+                    Sertifikat akreditasi ini berlaku mulai tanggal
+                    <strong>21 Desember 2022</strong> sampai dengan
+                    <strong>20 Desember 2027</strong>. Capaian ini menjadi bukti komitmen Program Studi
+                    D-III Teknik Mesin dalam menjaga mutu pendidikan vokasi, pengembangan kurikulum,
+                    sumber daya manusia, sarana prasarana, serta relevansi lulusan dengan kebutuhan
+                    dunia industri.
 
                 </p>
 
