@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 use App\Http\Controllers\Admin\AdminUserController;
 
+use App\Http\Controllers\Admin\DashboardController;
+
 
 Route::get('/dosen-staff', [LecturerController::class, 'index'])
     ->name('lecturers');
@@ -45,77 +47,109 @@ Route::get('/lecturers', [LecturerStaffController::class, 'index'])->name('lectu
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Auth
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])
+        ->name('login');
 
-    Route::resource('admin-users', AdminUserController::class)
-    ->except(['show']);
-    
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->name('login.post');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Protected Admin Routes
+    |--------------------------------------------------------------------------
+    */
     Route::middleware('admin.auth')->group(function () {
 
-        Route::get('/', function () {
-            return redirect()->route('admin.lecturer-staff.index');
-        })->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])
+            ->name('dashboard');
 
-        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::post('/logout', [AdminAuthController::class, 'logout'])
+            ->name('logout');
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pengelola Admin
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('admin-users', AdminUserController::class)
+            ->except(['show']);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Dosen & Staff
+        |--------------------------------------------------------------------------
+        */
         Route::resource('lecturer-staff', AdminLecturerStaffController::class)
             ->except(['show']);
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Akademik
+        |--------------------------------------------------------------------------
+        */
         Route::resource('academic-documents', AdminAcademicDocumentController::class)
             ->except(['show']);
-    Route::get('/profile-contents', [ProfileContentController::class, 'index'])
-    ->name('profile-contents.index');
 
-    Route::get('/profile-contents/{profileSection}/edit', [ProfileContentController::class, 'edit'])
-        ->name('profile-contents.edit');
 
-    Route::put('/profile-contents/{profileSection}', [ProfileContentController::class, 'update'])
-        ->name('profile-contents.update');
+        /*
+        |--------------------------------------------------------------------------
+        | Konten Profil
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/profile-contents', [ProfileContentController::class, 'index'])
+            ->name('profile-contents.index');
 
-    Route::post('/profile-contents/{profileSection}/items', [ProfileContentController::class, 'storeItem'])
-        ->name('profile-contents.items.store');
+        Route::get('/profile-contents/{profileSection}/edit', [ProfileContentController::class, 'edit'])
+            ->name('profile-contents.edit');
 
-    Route::put('/profile-items/{profileItem}', [ProfileContentController::class, 'updateItem'])
-        ->name('profile-contents.items.update');
+        Route::put('/profile-contents/{profileSection}', [ProfileContentController::class, 'update'])
+            ->name('profile-contents.update');
 
-    Route::delete('/profile-items/{profileItem}', [ProfileContentController::class, 'destroyItem'])
-        ->name('profile-contents.items.destroy');
+        Route::post('/profile-contents/{profileSection}/items', [ProfileContentController::class, 'storeItem'])
+            ->name('profile-contents.items.store');
 
-    });
-    Route::get('/facilities', [AdminFacilityController::class, 'index'])
-        ->name('facilities.index');
+        Route::put('/profile-items/{profileItem}', [ProfileContentController::class, 'updateItem'])
+            ->name('profile-contents.items.update');
 
-    Route::get('/facilities/{facility}/edit', [AdminFacilityController::class, 'edit'])
-        ->name('facilities.edit');
+        Route::delete('/profile-items/{profileItem}', [ProfileContentController::class, 'destroyItem'])
+            ->name('profile-contents.items.destroy');
 
-    Route::post('/facilities/{facility}/photos', [AdminFacilityController::class, 'storePhoto'])
-        ->name('facilities.photos.store');
 
-    Route::put('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'updatePhoto'])
-        ->name('facilities.photos.update');
+        /*
+        |--------------------------------------------------------------------------
+        | Dokumentasi Fasilitas
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/facilities', [AdminFacilityController::class, 'index'])
+            ->name('facilities.index');
 
-    Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
-        ->name('facilities.photos.destroy');
-    Route::get('/facilities', [AdminFacilityController::class, 'index'])
-    ->name('facilities.index');
+        Route::post('/facility-photos', [AdminFacilityController::class, 'storePhotoGeneral'])
+            ->name('facilities.photos.store-general');
 
-    Route::post('/facility-photos', [AdminFacilityController::class, 'storePhotoGeneral'])
-        ->name('facilities.photos.store-general');
+        Route::get('/facilities/{facility}/edit', [AdminFacilityController::class, 'edit'])
+            ->name('facilities.edit');
 
-    Route::get('/facilities/{facility}/edit', [AdminFacilityController::class, 'edit'])
-        ->name('facilities.edit');
+        Route::post('/facilities/{facility}/photos', [AdminFacilityController::class, 'storePhoto'])
+            ->name('facilities.photos.store');
 
-    Route::post('/facilities/{facility}/photos', [AdminFacilityController::class, 'storePhoto'])
-        ->name('facilities.photos.store');
+        Route::put('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'updatePhoto'])
+            ->name('facilities.photos.update');
 
-    Route::put('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'updatePhoto'])
-        ->name('facilities.photos.update');
-
-    Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
-        ->name('facilities.photos.destroy');
+        Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
+            ->name('facilities.photos.destroy');
 
     });
+
+});
 
 Route::get('/academic', [AcademicController::class, 'index'])->name('academic');
 
