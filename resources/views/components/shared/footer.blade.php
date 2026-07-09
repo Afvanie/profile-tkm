@@ -262,7 +262,7 @@
 
             <p class="text-slate-400 text-sm mt-4 md:mt-0">
 
-                Made with by Teknik Mesin Polinema
+                Made by Afvanie Rama Ardyansah
 
             </p>
 

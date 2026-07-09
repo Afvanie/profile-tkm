@@ -8,5 +8,7 @@
 @include('components.home.statistics')
 @include('components.home.about')
 
+@include('components.home.video-profile')
+
 
 @endsection

@@ -4,6 +4,12 @@
 
 @section('content')
 
-<h1>Kontak</h1>
+@include('components.contact.hero')
+
+@include('components.contact.info')
+
+@include('components.contact.map')
+
+@include('components.contact.form')
 
 @endsection

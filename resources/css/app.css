@@ -60,3 +60,20 @@ nav a:hover{
 @utility text-justify {
     text-align: justify;
 }
+
+.hero-banner-overlay {
+    background: linear-gradient(
+        90deg,
+        rgba(0, 59, 115, 0.42) 0%,
+        rgba(0, 91, 172, 0.72) 48%,
+        rgba(0, 59, 115, 0.92) 100%
+    );
+}
+
+.hero-banner-depth {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.08) 0%,
+        rgba(0, 43, 85, 0.24) 100%
+    );
+}

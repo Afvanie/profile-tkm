@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\LecturerStaffController;
 use App\Http\Controllers\Admin\LecturerStaffController as AdminLecturerStaffController;
 use App\Http\Controllers\Admin\AcademicDocumentController as AdminAcademicDocumentController;
 use App\Http\Controllers\Admin\ProfileContentController;
+use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
@@ -77,8 +78,39 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ->name('profile-contents.items.destroy');
 
     });
+    Route::get('/facilities', [AdminFacilityController::class, 'index'])
+        ->name('facilities.index');
 
-});
+    Route::get('/facilities/{facility}/edit', [AdminFacilityController::class, 'edit'])
+        ->name('facilities.edit');
+
+    Route::post('/facilities/{facility}/photos', [AdminFacilityController::class, 'storePhoto'])
+        ->name('facilities.photos.store');
+
+    Route::put('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'updatePhoto'])
+        ->name('facilities.photos.update');
+
+    Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
+        ->name('facilities.photos.destroy');
+    Route::get('/facilities', [AdminFacilityController::class, 'index'])
+    ->name('facilities.index');
+
+    Route::post('/facility-photos', [AdminFacilityController::class, 'storePhotoGeneral'])
+        ->name('facilities.photos.store-general');
+
+    Route::get('/facilities/{facility}/edit', [AdminFacilityController::class, 'edit'])
+        ->name('facilities.edit');
+
+    Route::post('/facilities/{facility}/photos', [AdminFacilityController::class, 'storePhoto'])
+        ->name('facilities.photos.store');
+
+    Route::put('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'updatePhoto'])
+        ->name('facilities.photos.update');
+
+    Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
+        ->name('facilities.photos.destroy');
+
+    });
 
 Route::get('/academic', [AcademicController::class, 'index'])->name('academic');
 

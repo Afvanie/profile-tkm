@@ -4,6 +4,12 @@
 
 @section('content')
 
-<h1>Fasilitas</h1>
+@include('components.facilities.hero')
+
+@include('components.facilities.categories')
+
+@include('components.facilities.competency')
+
+@include('components.facilities.gallery')
 
 @endsection
