@@ -6,7 +6,7 @@
         <img
             src="{{ asset('assets/images/lecturers-banner.jpg') }}"
             class="w-full h-full object-cover"
-            alt="Dosen dan Staff TOE">
+            alt="Dosen dan Staff Teknik Mesin">
 
         <div class="absolute inset-0 bg-gradient-to-r from-[#003B73]/90 via-[#005BAC]/75 to-[#003B73]/90"></div>
 
@@ -41,8 +41,7 @@
         </h1>
 
         <p class="mt-6 max-w-2xl text-lg text-white/90 leading-8">
-            Tenaga pendidik dan kependidikan Program Studi Teknik Otomotif
-            Elektronik Politeknik Negeri Malang yang mendukung proses
+            Tenaga pendidik dan kependidikan Program Studi D-III Teknik Mesin Politeknik Negeri Malang yang mendukung proses
             pendidikan vokasi secara profesional.
         </p>
 

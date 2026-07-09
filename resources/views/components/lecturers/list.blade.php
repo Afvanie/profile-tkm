@@ -1,4 +1,4 @@
-<section class="relative py-24 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+<section class="relative py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
 
     {{-- Background Decoration --}}
     <div class="absolute inset-0 -z-10">
@@ -13,6 +13,11 @@
             linear-gradient(to right,#0f172a 1px,transparent 1px);
             background-size:70px 70px;">
         </div>
+
+        <img
+            src="{{ asset('assets/images/logo.png') }}"
+            alt=""
+            class="absolute -right-20 top-24 w-[360px] md:w-[520px] opacity-[0.035] grayscale select-none pointer-events-none">
 
     </div>
 
@@ -31,53 +36,80 @@
 
             <div class="w-24 h-1 bg-yellow-400 rounded-full mx-auto mt-6"></div>
 
-            <p class="mt-7 text-slate-600 leading-8">
+            <p class="mt-6 text-slate-600 leading-8">
                 Tenaga pendidik dan kependidikan yang mendukung proses pembelajaran,
-                pelayanan akademik, dan pengembangan Program Studi Teknik Otomotif Elektronik.
+                pelayanan akademik, dan pengembangan Program Studi D-III Teknik Mesin.
             </p>
 
         </div>
 
-        @php
-            $people = $lecturers->concat($staff)->sortBy('name')->values();
-        @endphp
+        {{-- Summary Card --}}
+        <div class="grid md:grid-cols-2 gap-6 mb-14">
 
-        {{-- Filter & Search --}}
+            <div class="rounded-3xl bg-white/90 backdrop-blur border border-slate-100 shadow-lg p-7" data-aos="fade-up">
+                <p class="uppercase tracking-[4px] text-blue-700 text-sm font-semibold">
+                    Tenaga Pendidik
+                </p>
+
+                <div class="mt-4 flex items-end justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold text-slate-800">
+                            Dosen
+                        </h3>
+
+                        <p class="mt-2 text-slate-500">
+                            Pengajar dan pembimbing akademik mahasiswa.
+                        </p>
+                    </div>
+
+                    <span class="text-5xl font-black text-blue-100">
+                        {{ $lecturers->count() }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="rounded-3xl bg-white/90 backdrop-blur border border-slate-100 shadow-lg p-7" data-aos="fade-up" data-aos-delay="100">
+                <p class="uppercase tracking-[4px] text-yellow-600 text-sm font-semibold">
+                    Tenaga Kependidikan
+                </p>
+
+                <div class="mt-4 flex items-end justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold text-slate-800">
+                            Staff
+                        </h3>
+
+                        <p class="mt-2 text-slate-500">
+                            Pendukung layanan administrasi dan akademik.
+                        </p>
+                    </div>
+
+                    <span class="text-5xl font-black text-yellow-100">
+                        {{ $staff->count() }}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        {{-- Search --}}
         <div
-            class="mb-12 rounded-3xl bg-white border border-slate-100 shadow-lg p-5 md:p-6"
+            class="mb-14 rounded-3xl bg-white/90 backdrop-blur border border-slate-100 shadow-lg p-5 md:p-6"
             data-aos="fade-up"
-            data-aos-delay="100">
+            data-aos-delay="150">
 
-            <div class="flex flex-col lg:flex-row gap-5 lg:items-center lg:justify-between">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
-                {{-- Tabs --}}
-                <div class="flex flex-wrap gap-3">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800">
+                        Cari Dosen atau Staff
+                    </h3>
 
-                    <button
-                        type="button"
-                        data-filter="all"
-                        class="filter-btn active px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold transition">
-                        Semua
-                    </button>
-
-                    <button
-                        type="button"
-                        data-filter="dosen"
-                        class="filter-btn px-5 py-3 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-blue-50 hover:text-blue-700 transition">
-                        Dosen
-                    </button>
-
-                    <button
-                        type="button"
-                        data-filter="staff"
-                        class="filter-btn px-5 py-3 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-yellow-50 hover:text-yellow-700 transition">
-                        Staff
-                    </button>
-
+                    <p class="mt-1 text-sm text-slate-500">
+                        Masukkan nama atau NIP untuk menemukan data tenaga pendidik dan kependidikan.
+                    </p>
                 </div>
 
-                {{-- Search --}}
-                <div class="relative w-full lg:w-96">
+                <div class="relative w-full md:w-96">
 
                     <input
                         type="text"
@@ -96,7 +128,7 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 01114 0z" />
 
                     </svg>
 
@@ -105,196 +137,287 @@
             </div>
 
         </div>
+        {{-- ===================================================== --}}
+        {{-- DOSEN --}}
+        {{-- ===================================================== --}}
+        <div class="mb-20">
 
-        {{-- Grid --}}
-        @if ($people->count() > 0)
+            <div class="mb-8" data-aos="fade-up">
 
-            <div id="peopleGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
+                <span class="uppercase tracking-[4px] text-blue-700 font-semibold">
+                    Tenaga Pendidik
+                </span>
 
-                @foreach ($people as $person)
+                <h3 class="mt-3 text-3xl md:text-4xl font-bold text-slate-800">
+                    Dosen Program Studi
+                </h3>
 
-                    <div
-                        data-aos="fade-up"
-                        data-aos-delay="{{ $loop->index * 70 }}"
-                        data-card="person"
-                        data-type="{{ $person->type }}"
-                        data-name="{{ strtolower($person->name) }}"
-                        data-nip="{{ strtolower($person->nip ?? '') }}"
-                        class="person-card group rounded-3xl bg-white border border-slate-100 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                <div class="w-20 h-1 bg-yellow-400 rounded-full mt-5"></div>
 
-                        {{-- Photo --}}
-                        <div class="relative h-80 bg-slate-100 overflow-hidden">
+            </div>
 
-                            @if ($person->photo)
+            @if ($lecturers->count() > 0)
 
-                                <img
-                                    src="{{ asset('storage/' . $person->photo) }}"
-                                    alt="{{ $person->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
 
-                            @else
+                    @foreach ($lecturers->sortBy('name') as $person)
 
-                                <div
-                                    class="w-full h-full flex items-center justify-center
-                                    {{ $person->type === 'dosen'
-                                        ? 'bg-gradient-to-br from-blue-100 to-blue-50'
-                                        : 'bg-gradient-to-br from-yellow-100 to-blue-50' }}">
+                        <div
+                            data-aos="fade-up"
+                            data-aos-delay="{{ $loop->index * 70 }}"
+                            data-card="person"
+                            data-name="{{ strtolower($person->name) }}"
+                            data-nip="{{ strtolower($person->nip ?? '') }}"
+                            class="person-card group rounded-3xl bg-white border border-slate-100 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden">
 
-                                    <span
-                                        class="text-7xl font-black
-                                        {{ $person->type === 'dosen'
-                                            ? 'text-blue-200'
-                                            : 'text-yellow-300' }}">
-                                        {{ strtoupper(substr($person->name, 0, 1)) }}
-                                    </span>
+                            <div class="relative h-80 bg-slate-100 overflow-hidden">
 
-                                </div>
+                                @if ($person->photo)
 
-                            @endif
-
-                            {{-- Overlay --}}
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent opacity-80"></div>
-
-                            {{-- Badge --}}
-                            <div class="absolute top-4 left-4">
-
-                                @if ($person->type === 'dosen')
-
-                                    <span class="px-4 py-2 rounded-full bg-blue-700 text-white text-sm font-semibold shadow-lg">
-                                        Dosen
-                                    </span>
+                                    <img
+                                        src="{{ asset('storage/' . $person->photo) }}"
+                                        alt="{{ $person->name }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
 
                                 @else
 
-                                    <span class="px-4 py-2 rounded-full bg-yellow-400 text-slate-900 text-sm font-semibold shadow-lg">
-                                        Staff
-                                    </span>
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-50">
+                                        <span class="text-7xl font-black text-blue-200">
+                                            {{ strtoupper(substr($person->name, 0, 1)) }}
+                                        </span>
+                                    </div>
 
                                 @endif
 
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent"></div>
+
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-4 py-2 rounded-full bg-blue-700 text-white text-sm font-semibold shadow-lg">
+                                        Dosen
+                                    </span>
+                                </div>
+
+                                <div class="absolute bottom-5 left-5 right-5">
+                                    <h3 class="text-xl font-bold text-white leading-snug">
+                                        {{ $person->name }}
+                                    </h3>
+
+                                    <p class="mt-2 text-white/80 text-sm">
+                                        NIP. {{ $person->nip ?? '-' }}
+                                    </p>
+                                </div>
+
                             </div>
 
-                            {{-- Name on image --}}
-                            <div class="absolute bottom-5 left-5 right-5">
-
-                                <h3 class="text-xl font-bold text-white leading-snug">
-                                    {{ $person->name }}
-                                </h3>
-
-                                <p class="mt-2 text-white/80 text-sm">
-                                    NIP. {{ $person->nip ?? '-' }}
+                            <div class="p-6">
+                                <p class="text-sm text-slate-500">
+                                    Tenaga Pendidik
                                 </p>
 
+                                <p class="mt-1 font-semibold text-slate-800">
+                                    Program Studi D-III Teknik Mesin
+                                </p>
                             </div>
 
                         </div>
 
-                        {{-- Body --}}
-                        <div class="p-6">
+                    @endforeach
 
-                            <div class="flex items-center justify-between gap-4">
+                </div>
 
-                                <div>
+            @else
 
-                                    <p class="text-sm text-slate-500">
-                                        {{ $person->type === 'dosen' ? 'Tenaga Pendidik' : 'Tenaga Kependidikan' }}
-                                    </p>
+                <div class="rounded-3xl bg-white/90 backdrop-blur border border-slate-100 p-8 shadow-lg" data-aos="fade-up">
 
-                                    <p class="mt-1 font-semibold text-slate-800">
-                                        Program Studi TOE
-                                    </p>
+                    <div class="flex flex-col md:flex-row md:items-center gap-5">
 
-                                </div>
+                        <div class="w-16 h-16 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl font-bold">
+                            D
+                        </div>
 
-                                <div
-                                    class="w-11 h-11 rounded-xl flex items-center justify-center
-                                    {{ $person->type === 'dosen'
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'bg-yellow-100 text-yellow-700' }}">
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-800">
+                                Data dosen belum tersedia
+                            </h4>
 
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         class="w-5 h-5"
-                                         fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5.121 17.804A9 9 0 1118.88 17.8M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-
-                                    </svg>
-
-                                </div>
-
-                            </div>
-
+                            <p class="mt-2 text-slate-500">
+                                Data dosen dapat ditambahkan melalui halaman admin Dosen & Staff.
+                            </p>
                         </div>
 
                     </div>
 
-                @endforeach
+                </div>
 
-            </div>
+            @endif
 
-            {{-- Empty Result --}}
-            <div
-                id="emptyPeople"
-                class="hidden mt-10 rounded-3xl bg-white border border-slate-100 shadow-lg p-10 text-center">
+        </div>
 
-                <h3 class="text-2xl font-bold text-slate-800">
-                    Data tidak ditemukan
+        {{-- ===================================================== --}}
+        {{-- STAFF --}}
+        {{-- ===================================================== --}}
+        <div>
+
+            <div class="mb-8" data-aos="fade-up">
+
+                <span class="uppercase tracking-[4px] text-yellow-600 font-semibold">
+                    Tenaga Kependidikan
+                </span>
+
+                <h3 class="mt-3 text-3xl md:text-4xl font-bold text-slate-800">
+                    Staff Program Studi
                 </h3>
 
-                <p class="mt-3 text-slate-500">
-                    Coba gunakan kata kunci lain atau ubah filter kategori.
-                </p>
+                <div class="w-20 h-1 bg-blue-700 rounded-full mt-5"></div>
 
             </div>
 
-        @else
+            @if ($staff->count() > 0)
 
-            <div class="rounded-3xl bg-white border border-slate-100 p-12 text-center shadow-lg">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
 
-                <h3 class="text-2xl font-bold text-slate-800">
-                    Data belum tersedia
-                </h3>
+                    @foreach ($staff->sortBy('name') as $person)
 
-                <p class="mt-3 text-slate-500">
-                    Data dosen dan staff belum ditambahkan melalui halaman admin.
-                </p>
+                        <div
+                            data-aos="fade-up"
+                            data-aos-delay="{{ $loop->index * 70 }}"
+                            data-card="person"
+                            data-name="{{ strtolower($person->name) }}"
+                            data-nip="{{ strtolower($person->nip ?? '') }}"
+                            class="person-card group rounded-3xl bg-white border border-slate-100 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden">
 
-            </div>
+                            <div class="relative h-80 bg-slate-100 overflow-hidden">
 
-        @endif
+                                @if ($person->photo)
+
+                                    <img
+                                        src="{{ asset('storage/' . $person->photo) }}"
+                                        alt="{{ $person->name }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+
+                                @else
+
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-yellow-100 to-blue-50">
+                                        <span class="text-7xl font-black text-yellow-300">
+                                            {{ strtoupper(substr($person->name, 0, 1)) }}
+                                        </span>
+                                    </div>
+
+                                @endif
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent"></div>
+
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-4 py-2 rounded-full bg-yellow-400 text-slate-900 text-sm font-semibold shadow-lg">
+                                        Staff
+                                    </span>
+                                </div>
+
+                                <div class="absolute bottom-5 left-5 right-5">
+                                    <h3 class="text-xl font-bold text-white leading-snug">
+                                        {{ $person->name }}
+                                    </h3>
+
+                                    <p class="mt-2 text-white/80 text-sm">
+                                        NIP. {{ $person->nip ?? '-' }}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="p-6">
+                                <p class="text-sm text-slate-500">
+                                    Tenaga Kependidikan
+                                </p>
+
+                                <p class="mt-1 font-semibold text-slate-800">
+                                    Program Studi D-III Teknik Mesin
+                                </p>
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+            @else
+
+                <div class="rounded-3xl bg-white/90 backdrop-blur border border-slate-100 p-8 shadow-lg" data-aos="fade-up">
+
+                    <div class="flex flex-col md:flex-row md:items-center gap-5">
+
+                        <div class="w-16 h-16 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-3xl font-bold">
+                            S
+                        </div>
+
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-800">
+                                Data staff belum tersedia
+                            </h4>
+
+                            <p class="mt-2 text-slate-500">
+                                Data staff dapat ditambahkan melalui halaman admin Dosen & Staff.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+        </div>
 
     </div>
+
+    <div
+    id="searchEmptyPeople"
+    class="hidden mt-10 rounded-3xl bg-white/90 backdrop-blur border border-slate-100 shadow-lg p-10 text-center">
+
+    <h3 class="text-2xl font-bold text-slate-800">
+        Data tidak ditemukan
+    </h3>
+
+    <p class="mt-3 text-slate-500">
+        Coba gunakan nama atau NIP lain.
+    </p>
+
+</div>
 
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const filterButtons = document.querySelectorAll('.filter-btn');
         const searchInput = document.getElementById('peopleSearch');
         const cards = document.querySelectorAll('[data-card="person"]');
-        const emptyState = document.getElementById('emptyPeople');
+        const emptyState = document.getElementById('searchEmptyPeople');
 
-        let activeFilter = 'all';
+        if (!searchInput || cards.length === 0) {
+            return;
+        }
 
-        function updateCards() {
-            const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        function normalizeText(text) {
+            return (text || '')
+                .toString()
+                .toLowerCase()
+                .trim();
+        }
+
+        function updateSearch() {
+            const keyword = normalizeText(searchInput.value);
             let visibleCount = 0;
 
-            cards.forEach(card => {
-                const type = card.dataset.type;
-                const name = card.dataset.name;
-                const nip = card.dataset.nip;
+            cards.forEach(function (card) {
+                const name = normalizeText(card.dataset.name);
+                const nip = normalizeText(card.dataset.nip);
 
-                const matchFilter = activeFilter === 'all' || type === activeFilter;
-                const matchSearch = name.includes(keyword) || nip.includes(keyword);
+                const isMatch =
+                    keyword === '' ||
+                    name.includes(keyword) ||
+                    nip.includes(keyword);
 
-                if (matchFilter && matchSearch) {
+                if (isMatch) {
                     card.classList.remove('hidden');
                     visibleCount++;
                 } else {
@@ -303,28 +426,10 @@
             });
 
             if (emptyState) {
-                emptyState.classList.toggle('hidden', visibleCount !== 0);
+                emptyState.classList.toggle('hidden', visibleCount > 0 || keyword === '');
             }
         }
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                activeFilter = this.dataset.filter;
-
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('active', 'bg-blue-700', 'text-white');
-                    btn.classList.add('bg-slate-100', 'text-slate-700');
-                });
-
-                this.classList.add('active', 'bg-blue-700', 'text-white');
-                this.classList.remove('bg-slate-100', 'text-slate-700');
-
-                updateCards();
-            });
-        });
-
-        if (searchInput) {
-            searchInput.addEventListener('input', updateCards);
-        }
+        searchInput.addEventListener('input', updateSearch);
     });
 </script>

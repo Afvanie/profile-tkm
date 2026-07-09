@@ -14,7 +14,7 @@
             </h1>
 
             <p class="text-slate-500 mt-2">
-                Kelola data dosen dan staff Program Studi TOE.
+                Kelola data dosen dan staff Program Studi Teknik Mesin.
             </p>
         </div>
 

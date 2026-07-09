@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin TOE</title>
+    <title>Login Admin Teknik Mesin</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -17,7 +17,7 @@
             <div class="text-center mb-8">
 
                 <img src="{{ asset('assets/images/logo.png') }}"
-                     alt="Logo TOE"
+                     alt="Logo polinema"
                      class="w-20 h-20 object-contain mx-auto mb-4">
 
                 <h1 class="text-3xl font-bold text-slate-800">
@@ -25,7 +25,7 @@
                 </h1>
 
                 <p class="mt-2 text-slate-500">
-                    Masuk untuk mengelola website TOE Polinema.
+                    Masuk untuk mengelola website Teknik Mesin Polinema.
                 </p>
 
             </div>

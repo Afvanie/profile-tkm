@@ -109,7 +109,7 @@
 
                             <img
                                 src="{{ asset('assets/images/akreditasi.jpg') }}"
-                                alt="Sertifikat Akreditasi TOE"
+                                alt="Sertifikat Akreditasi Teknik Mesin"
                                 class="w-full object-cover">
 
                         </div>
@@ -123,7 +123,7 @@
                                 </p>
 
                                 <h3 class="text-2xl font-bold text-slate-800">
-                                    TOE Polinema
+                                    D-III Teknik Mesin Polinema
                                 </h3>
 
                             </div>

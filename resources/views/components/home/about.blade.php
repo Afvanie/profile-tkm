@@ -86,7 +86,7 @@
 
                         class="w-full transition duration-700 hover:scale-105"
 
-                        alt="About TOE">
+                        alt="About Teknik Mesin">
 
                 </div>
 

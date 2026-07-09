@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\ProfileContentController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 
+Route::get('/dosen-staff', [LecturerController::class, 'index'])
+    ->name('lecturers');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

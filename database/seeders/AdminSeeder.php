@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
                 'email' => 'admin@polinema.com',
             ],
             [
-                'name' => 'Administrator TOE',
+                'name' => 'Administrator Teknik Mesin',
                 'password' => Hash::make('admin123'),
             ]
         );

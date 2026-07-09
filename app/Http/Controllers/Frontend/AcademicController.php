@@ -11,27 +11,27 @@ class AcademicController extends Controller
         'pedoman-akademik' => [
             'category' => 'pedoman_akademik',
             'title' => 'Pedoman Akademik',
-            'subtitle' => 'Dokumen pedoman akademik Program Studi Teknik Otomotif Elektronik.',
+            'subtitle' => 'Dokumen pedoman akademik Program Studi D-III Teknik Mesin.',
         ],
         'kalender-akademik' => [
             'category' => 'kalender_akademik',
             'title' => 'Kalender Akademik',
-            'subtitle' => 'Informasi kalender kegiatan akademik Program Studi Teknik Otomotif Elektronik.',
+            'subtitle' => 'Informasi kalender kegiatan akademik Program Studi D-III Teknik Mesin.',
         ],
         'kurikulum' => [
             'category' => 'kurikulum',
             'title' => 'Kurikulum',
-            'subtitle' => 'Struktur kurikulum dan informasi mata kuliah Program Studi Teknik Otomotif Elektronik.',
+            'subtitle' => 'Struktur kurikulum dan informasi mata kuliah Program Studi D-III Teknik Mesin.',
         ],
         'jadwal-kuliah' => [
             'category' => 'jadwal_kuliah',
             'title' => 'Jadwal Kuliah',
-            'subtitle' => 'Informasi jadwal perkuliahan Program Studi Teknik Otomotif Elektronik.',
+            'subtitle' => 'Informasi jadwal perkuliahan Program Studi D-III Teknik Mesin.',
         ],
         'laporan-ketercapaian' => [
             'category' => 'laporan_ketercapaian',
             'title' => 'Laporan Ketercapaian',
-            'subtitle' => 'Dokumen laporan ketercapaian pembelajaran Program Studi Teknik Otomotif Elektronik.',
+            'subtitle' => 'Dokumen laporan ketercapaian pembelajaran Program Studi D-III Teknik Mesin.',
         ],
     ];
 
