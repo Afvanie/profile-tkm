@@ -9,11 +9,42 @@ use Illuminate\Support\Facades\Storage;
 
 class LecturerStaffController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lecturerStaff = LecturerStaff::latest()->get();
+        $search = trim($request->get('search', ''));
+        $type = $request->get('type', 'all');
 
-        return view('admin.lecturer-staff.index', compact('lecturerStaff'));
+        $query = LecturerStaff::query();
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('nip', 'like', '%' . $search . '%');
+            });
+        }
+
+        if (in_array($type, ['dosen', 'staff'], true)) {
+            $query->where('type', $type);
+        }
+
+        $lecturerStaff = $query
+            ->orderByRaw("FIELD(type, 'dosen', 'staff')")
+            ->orderBy('name')
+            ->paginate(12)
+            ->withQueryString();
+
+        $totalAll = LecturerStaff::count();
+        $totalDosen = LecturerStaff::where('type', 'dosen')->count();
+        $totalStaff = LecturerStaff::where('type', 'staff')->count();
+
+        return view('admin.lecturer-staff.index', compact(
+            'lecturerStaff',
+            'search',
+            'type',
+            'totalAll',
+            'totalDosen',
+            'totalStaff'
+        ));
     }
 
     public function create()

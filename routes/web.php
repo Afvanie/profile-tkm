@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AccreditationController as AdminAccreditationController;
+use App\Http\Controllers\Admin\LecturerStaffImportController;
 
 Route::get('/dosen-staff', [LecturerController::class, 'index'])
     ->name('lecturers');
@@ -65,6 +66,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::middleware('admin.auth')->group(function () {
+
+        Route::get('lecturer-staff/template', [LecturerStaffImportController::class, 'template'])
+            ->name('lecturer-staff.template');
+
+        Route::post('lecturer-staff/import/{type}', [LecturerStaffImportController::class, 'import'])
+            ->whereIn('type', ['dosen', 'staff'])
+            ->name('lecturer-staff.import');
 
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');

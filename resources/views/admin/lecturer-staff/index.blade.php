@@ -39,6 +39,93 @@
 
     </div>
 
+    {{-- IMPORT DATA DOSEN & STAFF --}}
+    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 mb-8">
+
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+
+            <div>
+                <h2 class="text-xl font-black text-slate-800">
+                    Import Data Dosen & Staff
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Gunakan template Excel agar format data sesuai dengan sistem. Kolom yang dibaca hanya nama dan NIP.
+                </p>
+            </div>
+
+            <a href="{{ route('admin.lecturer-staff.template') }}"
+                class="inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200 transition">
+                Download Template
+            </a>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mt-6">
+
+            {{-- Import Dosen --}}
+            <form action="{{ route('admin.lecturer-staff.import', 'dosen') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="rounded-2xl bg-blue-50 border border-blue-100 p-5">
+
+                @csrf
+
+                <h3 class="text-lg font-black text-blue-700">
+                    Import Dosen
+                </h3>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Upload file Excel untuk menambahkan data dosen.
+                </p>
+
+                <input type="file"
+                    name="file"
+                    accept=".xlsx,.xls,.csv"
+                    required
+                    class="mt-4 w-full rounded-2xl border border-blue-100 bg-white p-3 text-sm text-slate-600">
+
+                <button type="submit"
+                    class="mt-4 w-full px-5 py-3 rounded-2xl bg-blue-700 text-white font-bold hover:bg-blue-800 transition">
+                    Import Dosen
+                </button>
+
+            </form>
+
+
+            {{-- Import Staff --}}
+            <form action="{{ route('admin.lecturer-staff.import', 'staff') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="rounded-2xl bg-yellow-50 border border-yellow-100 p-5">
+
+                @csrf
+
+                <h3 class="text-lg font-black text-yellow-700">
+                    Import Staff
+                </h3>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Upload file Excel untuk menambahkan data staff.
+                </p>
+
+                <input type="file"
+                    name="file"
+                    accept=".xlsx,.xls,.csv"
+                    required
+                    class="mt-4 w-full rounded-2xl border border-yellow-100 bg-white p-3 text-sm text-slate-600">
+
+                <button type="submit"
+                    class="mt-4 w-full px-5 py-3 rounded-2xl bg-yellow-500 text-white font-bold hover:bg-yellow-600 transition">
+                    Import Staff
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
 
     {{-- Alert --}}
     @if (session('success'))
@@ -61,7 +148,7 @@
                     </p>
 
                     <h2 class="mt-3 text-4xl font-black text-slate-800">
-                        {{ $lecturerStaff->count() }}
+                        {{ $totalAll ?? 0 }}
                     </h2>
                 </div>
 
@@ -93,7 +180,7 @@
                     </p>
 
                     <h2 class="mt-3 text-4xl font-black text-slate-800">
-                        {{ $lecturerStaff->where('type', 'dosen')->count() }}
+                        {{ $totalDosen ?? 0 }}
                     </h2>
                 </div>
 
@@ -130,7 +217,7 @@
                     </p>
 
                     <h2 class="mt-3 text-4xl font-black text-slate-800">
-                        {{ $lecturerStaff->where('type', 'staff')->count() }}
+                        {{ $totalStaff ?? 0 }}
                     </h2>
                 </div>
 
@@ -163,7 +250,7 @@
         {{-- Toolbar --}}
         <div class="p-6 md:p-8 border-b border-slate-100">
 
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+            <div class="flex flex-col gap-6">
 
                 <div>
                     <h2 class="text-2xl font-black text-slate-800">
@@ -175,27 +262,67 @@
                     </p>
                 </div>
 
-                <div class="relative w-full lg:w-96">
+                {{-- Search & Filter --}}
+                <form action="{{ route('admin.lecturer-staff.index') }}" method="GET">
 
-                    <input
-                        type="text"
-                        id="lecturerStaffSearch"
-                        placeholder="Cari nama, NIP, atau tipe..."
-                        class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 pl-12 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div class="grid lg:grid-cols-12 gap-4 items-end">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
+                        <div class="lg:col-span-6">
 
-                        <path stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
-                    </svg>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">
+                                Cari Nama / NIP
+                            </label>
 
-                </div>
+                            <input type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                placeholder="Masukkan nama dosen, staff, atau NIP..."
+                                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                        </div>
+
+                        <div class="lg:col-span-3">
+
+                            <label class="block text-sm font-bold text-slate-700 mb-2">
+                                Filter Kategori
+                            </label>
+
+                            <select name="type"
+                                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                                <option value="all" {{ request('type', 'all') === 'all' ? 'selected' : '' }}>
+                                    Semua Data
+                                </option>
+
+                                <option value="dosen" {{ request('type') === 'dosen' ? 'selected' : '' }}>
+                                    Dosen
+                                </option>
+
+                                <option value="staff" {{ request('type') === 'staff' ? 'selected' : '' }}>
+                                    Staff
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="lg:col-span-3 flex gap-3">
+
+                            <button type="submit"
+                                class="flex-1 inline-flex items-center justify-center px-5 py-4 rounded-2xl bg-blue-700 text-white font-bold hover:bg-blue-800 transition">
+                                Cari
+                            </button>
+
+                            <a href="{{ route('admin.lecturer-staff.index') }}"
+                                class="inline-flex items-center justify-center px-5 py-4 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200 transition">
+                                Reset
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </form>
 
             </div>
 
@@ -451,61 +578,17 @@
 
         </div>
 
+        @if ($lecturerStaff->hasPages())
+            <div class="px-6 md:px-8 py-6 border-t border-slate-100">
+                {{ $lecturerStaff->links() }}
+            </div>
+        @endif
 
-        {{-- Empty Search --}}
-        <div id="lecturerStaffEmptySearch" class="hidden p-10 text-center border-t border-slate-100">
-
-            <h3 class="text-xl font-bold text-slate-800">
-                Data tidak ditemukan
-            </h3>
-
-            <p class="mt-2 text-slate-500">
-                Coba gunakan kata kunci pencarian lain.
-            </p>
-
-        </div>
 
     </div>
 
 </div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('lecturerStaffSearch');
-        const cards = document.querySelectorAll('[data-person-card]');
-        const emptySearch = document.getElementById('lecturerStaffEmptySearch');
-
-        if (!searchInput) {
-            return;
-        }
-
-        searchInput.addEventListener('input', function () {
-            const keyword = this.value.toLowerCase().trim();
-            let visibleCount = 0;
-
-            cards.forEach(function (card) {
-                const name = card.dataset.name || '';
-                const nip = card.dataset.nip || '';
-                const type = card.dataset.type || '';
-
-                const isMatch =
-                    name.includes(keyword) ||
-                    nip.includes(keyword) ||
-                    type.includes(keyword);
-
-                card.style.display = isMatch ? '' : 'none';
-
-                if (isMatch) {
-                    visibleCount++;
-                }
-            });
-
-            if (emptySearch) {
-                emptySearch.classList.toggle('hidden', visibleCount > 0);
-            }
-        });
-    });
-</script>
 
 @endsection
