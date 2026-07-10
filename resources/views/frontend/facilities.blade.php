@@ -10,6 +10,8 @@
 
 @include('components.facilities.competency')
 
+@include('components.facilities.floor-plan')
+
 @include('components.facilities.gallery')
 
 @endsection
