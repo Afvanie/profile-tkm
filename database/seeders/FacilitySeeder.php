@@ -47,9 +47,9 @@ class FacilitySeeder extends Seeder
                 'sort_order' => 6,
             ],
             [
-                'category' => 'masjid',
-                'title' => 'Masjid',
-                'description' => 'Masjid menjadi fasilitas ibadah bagi mahasiswa, dosen, tenaga kependidikan, dan masyarakat kampus dalam menunjang kegiatan spiritual di lingkungan Polinema.',
+                'category' => 'Musholla',
+                'title' => 'Musholla',
+                'description' => 'Musholla menjadi fasilitas ibadah bagi mahasiswa, dosen, tenaga kependidikan, dan masyarakat kampus dalam menunjang kegiatan spiritual di lingkungan Polinema.',
                 'sort_order' => 7,
             ],
             [

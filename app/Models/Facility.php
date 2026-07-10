@@ -29,7 +29,7 @@ class Facility extends Model
             'ruang_dosen' => 'Ruang Dosen',
             'tata_usaha' => 'Ruang Tata Usaha',
             'fasilitas_kesehatan' => 'Fasilitas Kesehatan',
-            'masjid' => 'Masjid',
+            'Musholla' => 'Musholla',
             'galeri' => 'Galeri Aktivitas Mahasiswa',
         ];
     }

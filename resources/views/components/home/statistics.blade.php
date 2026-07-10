@@ -16,22 +16,22 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
 
             <div class="p-6 bg-gray-50 rounded-xl shadow-sm">
-                <h3 class="text-4xl font-bold text-blue-700">xx+</h3>
+                <h3 class="text-4xl font-bold text-blue-700">540</h3>
                 <p class="mt-2 text-gray-600">Mahasiswa</p>
             </div>
 
             <div class="p-6 bg-gray-50 rounded-xl shadow-sm">
-                <h3 class="text-4xl font-bold text-blue-700">xx+</h3>
+                <h3 class="text-4xl font-bold text-blue-700">65</h3>
                 <p class="mt-2 text-gray-600">Dosen</p>
             </div>
 
             <div class="p-6 bg-gray-50 rounded-xl shadow-sm">
-                <h3 class="text-4xl font-bold text-blue-700">4+</h3>
+                <h3 class="text-4xl font-bold text-blue-700">21</h3>
                 <p class="mt-2 text-gray-600">Laboratorium</p>
             </div>
 
             <div class="p-6 bg-gray-50 rounded-xl shadow-sm">
-                <h3 class="text-4xl font-bold text-blue-700">2005</h3>
+                <h3 class="text-4xl font-bold text-blue-700">1982</h3>
                 <p class="mt-2 text-gray-600">Tahun Berdiri</p>
             </div>
 
