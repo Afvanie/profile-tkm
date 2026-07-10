@@ -92,6 +92,16 @@
                                 Laporan Ketercapaian
                             </a>
 
+                            <a href="{{ route('academic.page', 'panduan-laporan-tugas-akhir') }}"
+                                class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-700">
+                                Panduan Laporan Tugas Akhir
+                            </a>
+
+                            <a href="{{ route('academic.page', 'panduan-laporan-pkl') }}"
+                                class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-700">
+                                Panduan Laporan PKL
+                            </a>
+
                         </div>
 
                     </div>
@@ -256,28 +266,38 @@
             <div class="rounded-3xl bg-slate-50 border border-slate-100 p-3 space-y-1">
 
                 <a href="{{ route('academic.page', 'pedoman-akademik') }}"
-                    class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
                     Pedoman Akademik
                 </a>
 
                 <a href="{{ route('academic.page', 'kalender-akademik') }}"
-                    class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
                     Kalender Akademik
                 </a>
 
                 <a href="{{ route('academic.page', 'kurikulum') }}"
-                    class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
                     Kurikulum
                 </a>
 
                 <a href="{{ route('academic.page', 'jadwal-kuliah') }}"
-                    class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
                     Jadwal Kuliah
                 </a>
 
                 <a href="{{ route('academic.page', 'laporan-ketercapaian') }}"
-                    class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
                     Laporan Ketercapaian
+                </a>
+
+                <a href="{{ route('academic.page', 'panduan-laporan-tugas-akhir') }}"
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    Panduan Laporan Tugas Akhir
+                </a>
+
+                <a href="{{ route('academic.page', 'panduan-laporan-pkl') }}"
+                    class="mobile-nav-link block w-full px-4 py-3 rounded-2xl text-[15px] leading-6 text-slate-700 font-semibold hover:bg-white hover:text-blue-700 hover:shadow transition">
+                    Panduan Laporan PKL
                 </a>
 
             </div>

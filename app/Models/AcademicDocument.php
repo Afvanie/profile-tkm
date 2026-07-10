@@ -25,6 +25,8 @@ class AcademicDocument extends Model
             'kurikulum' => 'Kurikulum',
             'jadwal_kuliah' => 'Jadwal Kuliah',
             'laporan_ketercapaian' => 'Laporan Ketercapaian',
+            'panduan_laporan_tugas_akhir' => 'Panduan Laporan Tugas Akhir',
+            'panduan_laporan_pkl' => 'Panduan Laporan PKL',
         ];
     }
 

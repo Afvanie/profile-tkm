@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class AcademicDocumentController extends Controller
 {
@@ -28,9 +29,14 @@ class AcademicDocumentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:pedoman_akademik,kalender_akademik,kurikulum,jadwal_kuliah,laporan_ketercapaian',
+
+            'category' => [
+                'required',
+                Rule::in(array_keys(AcademicDocument::categories())),
+            ],
+
             'description' => 'nullable|string',
             'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
             'external_link' => 'nullable|url',
@@ -45,14 +51,14 @@ class AcademicDocumentController extends Controller
         }
 
         AcademicDocument::create([
-            'title' => $request->title,
-            'category' => $request->category,
-            'description' => $request->description,
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'description' => $validated['description'] ?? null,
             'file_path' => $filePath,
-            'external_link' => $request->external_link,
-            'academic_year' => $request->academic_year,
+            'external_link' => $validated['external_link'] ?? null,
+            'academic_year' => $validated['academic_year'] ?? null,
             'is_active' => $request->has('is_active'),
-            'sort_order' => $request->sort_order ?? 0,
+            'sort_order' => $validated['sort_order'] ?? 0,
         ]);
 
         return redirect()
@@ -69,9 +75,14 @@ class AcademicDocumentController extends Controller
 
     public function update(Request $request, AcademicDocument $academicDocument)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:pedoman_akademik,kalender_akademik,kurikulum,jadwal_kuliah,laporan_ketercapaian',
+
+            'category' => [
+                'required',
+                Rule::in(array_keys(AcademicDocument::categories())),
+            ],
+
             'description' => 'nullable|string',
             'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
             'external_link' => 'nullable|url',
@@ -91,14 +102,14 @@ class AcademicDocumentController extends Controller
         }
 
         $academicDocument->update([
-            'title' => $request->title,
-            'category' => $request->category,
-            'description' => $request->description,
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'description' => $validated['description'] ?? null,
             'file_path' => $filePath,
-            'external_link' => $request->external_link,
-            'academic_year' => $request->academic_year,
+            'external_link' => $validated['external_link'] ?? null,
+            'academic_year' => $validated['academic_year'] ?? null,
             'is_active' => $request->has('is_active'),
-            'sort_order' => $request->sort_order ?? 0,
+            'sort_order' => $validated['sort_order'] ?? 0,
         ]);
 
         return redirect()

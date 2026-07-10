@@ -13,25 +13,41 @@ class AcademicController extends Controller
             'title' => 'Pedoman Akademik',
             'subtitle' => 'Dokumen pedoman akademik Program Studi D-III Teknik Mesin.',
         ],
+
         'kalender-akademik' => [
             'category' => 'kalender_akademik',
             'title' => 'Kalender Akademik',
             'subtitle' => 'Informasi kalender kegiatan akademik Program Studi D-III Teknik Mesin.',
         ],
+
         'kurikulum' => [
             'category' => 'kurikulum',
             'title' => 'Kurikulum',
             'subtitle' => 'Struktur kurikulum dan informasi mata kuliah Program Studi D-III Teknik Mesin.',
         ],
+
         'jadwal-kuliah' => [
             'category' => 'jadwal_kuliah',
             'title' => 'Jadwal Kuliah',
             'subtitle' => 'Informasi jadwal perkuliahan Program Studi D-III Teknik Mesin.',
         ],
+
         'laporan-ketercapaian' => [
             'category' => 'laporan_ketercapaian',
             'title' => 'Laporan Ketercapaian',
             'subtitle' => 'Dokumen laporan ketercapaian pembelajaran Program Studi D-III Teknik Mesin.',
+        ],
+
+        'panduan-laporan-tugas-akhir' => [
+            'category' => 'panduan_laporan_tugas_akhir',
+            'title' => 'Panduan Laporan Tugas Akhir',
+            'subtitle' => 'Dokumen panduan penyusunan laporan tugas akhir mahasiswa Program Studi D-III Teknik Mesin.',
+        ],
+
+        'panduan-laporan-pkl' => [
+            'category' => 'panduan_laporan_pkl',
+            'title' => 'Panduan Laporan PKL',
+            'subtitle' => 'Dokumen panduan penyusunan laporan Praktik Kerja Lapangan mahasiswa Program Studi D-III Teknik Mesin.',
         ],
     ];
 
