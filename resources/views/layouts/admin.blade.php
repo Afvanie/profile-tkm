@@ -187,6 +187,27 @@
                         Konten Profil
                     </a>
 
+                    <a href="{{ route('admin.accreditations.index') }}"
+                        class="admin-menu-link {{ request()->routeIs('admin.accreditations.*') ? 'admin-menu-active' : 'admin-menu-default' }}">
+
+                        <span class="admin-menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 12l2 2 4-4M12 3l7 4v5c0 5-3 9-7 9s-7-4-7-9V7l7-4z" />
+                            </svg>
+                        </span>
+
+                        Akreditasi
+
+                    </a>
+
                     <a href="{{ route('admin.lecturer-staff.index') }}"
                         class="admin-menu-link {{ request()->routeIs('admin.lecturer-staff.*') ? 'admin-menu-active' : 'admin-menu-default' }}">
                         <span class="admin-menu-icon">

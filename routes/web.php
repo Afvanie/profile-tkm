@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\AdminUserController;
 
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\Admin\AccreditationController as AdminAccreditationController;
 
 Route::get('/dosen-staff', [LecturerController::class, 'index'])
     ->name('lecturers');
@@ -123,7 +123,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/profile-items/{profileItem}', [ProfileContentController::class, 'destroyItem'])
             ->name('profile-contents.items.destroy');
 
-
+        Route::resource('accreditations', AdminAccreditationController::class)
+            ->except(['show']);
         /*
         |--------------------------------------------------------------------------
         | Dokumentasi Fasilitas

@@ -1,11 +1,45 @@
-<section class="relative py-24 overflow-hidden bg-white">
+@php
+    $accreditations = \App\Models\Accreditation::where('is_active', true)
+        ->orderBy('sort_order')
+        ->orderByDesc('created_at')
+        ->get();
+
+    $bulanIndonesia = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    ];
+
+    $formatTanggalIndonesia = function ($date) use ($bulanIndonesia) {
+        if (!$date) {
+            return '-';
+        }
+
+        return (int) $date->format('d') . ' ' .
+            $bulanIndonesia[(int) $date->format('m')] . ' ' .
+            $date->format('Y');
+    };
+@endphp
+
+@if ($accreditations->count())
+
+<section class="relative py-20 overflow-hidden bg-white">
 
     {{-- Background Decoration --}}
     <div class="absolute inset-0 -z-10">
 
-        <div class="absolute -top-40 -right-40 w-[520px] h-[520px] rounded-full bg-blue-200/25 blur-[140px]"></div>
+        <div class="absolute -top-40 -right-40 w-[420px] h-[420px] rounded-full bg-blue-200/20 blur-[120px]"></div>
 
-        <div class="absolute -bottom-40 -left-40 w-[520px] h-[520px] rounded-full bg-yellow-200/25 blur-[140px]"></div>
+        <div class="absolute -bottom-40 -left-40 w-[420px] h-[420px] rounded-full bg-yellow-200/20 blur-[120px]"></div>
 
         <div
             class="absolute inset-0 opacity-[0.025]"
@@ -18,130 +52,236 @@
 
     <div class="max-w-7xl mx-auto px-6">
 
-        <div class="grid lg:grid-cols-2 gap-14 items-center">
+        {{-- Heading --}}
+        <div class="max-w-3xl mx-auto text-center mb-14" data-aos="fade-up">
 
-            {{-- LEFT CONTENT --}}
-            <div data-aos="fade-right">
+            <span class="uppercase tracking-[5px] text-blue-700 font-semibold">
+                Akreditasi
+            </span>
 
-                <span class="uppercase tracking-[5px] text-blue-700 font-semibold">
-                    Akreditasi
-                </span>
+            <h2 class="mt-4 text-4xl md:text-5xl font-bold text-slate-800 leading-tight">
+                Pengakuan Mutu Program Studi
+            </h2>
 
-                <h2 class="mt-4 text-4xl md:text-5xl font-bold text-slate-800 leading-tight">
-                    Program Studi Terakreditasi Unggul
-                </h2>
+            <div class="w-24 h-1 bg-yellow-400 rounded-full mt-6 mb-8 mx-auto"></div>
 
-                <div class="w-24 h-1 bg-yellow-400 rounded-full mt-6 mb-8"></div>
+            <p class="text-slate-600 leading-8">
+                Informasi akreditasi nasional dan internasional Program Studi
+                D-III Teknik Mesin Politeknik Negeri Malang.
+            </p>
 
-                <p class="text-slate-600 leading-8 text-justify">
-                    Program Studi D-III Teknik Mesin Politeknik Negeri Malang telah memperoleh
-                    akreditasi dengan peringkat <strong>Unggul</strong> dari Lembaga Akreditasi
-                    Mandiri Program Studi Keteknikan atau <strong>LAM Teknik</strong>. Akreditasi ini
-                    ditetapkan berdasarkan Keputusan LAM Teknik Nomor
-                    <strong>0136/SK/LAM Teknik/VD3/XII/2022</strong>.
-                </p>
+        </div>
 
-                <p class="mt-6 text-slate-600 leading-8 text-justify">
-                    Sertifikat akreditasi ini berlaku mulai tanggal
-                    <strong>21 Desember 2022</strong> sampai dengan
-                    <strong>20 Desember 2027</strong>. Capaian ini menjadi bukti komitmen Program Studi
-                    D-III Teknik Mesin dalam menjaga mutu pendidikan vokasi, pengembangan kurikulum,
-                    sumber daya manusia, sarana prasarana, serta relevansi lulusan dengan kebutuhan
-                    dunia industri.
-                </p>
 
-                {{-- Info --}}
-                <div class="grid sm:grid-cols-3 gap-5 mt-10">
+        {{-- Accreditation Cards --}}
+        <div class="grid lg:grid-cols-2 gap-8">
 
-                    <div class="rounded-2xl bg-slate-50 border border-slate-100 p-5">
+            @foreach ($accreditations as $accreditation)
 
-                        <p class="text-sm text-slate-500">
-                            Predikat
-                        </p>
+                @php
+                    $fileUrl = $accreditation->file_path
+                        ? asset('storage/' . $accreditation->file_path)
+                        : null;
 
-                        <h3 class="mt-2 text-2xl font-bold text-blue-700">
-                            Unggul
-                        </h3>
+                    $extension = $accreditation->file_path
+                        ? strtolower(pathinfo($accreditation->file_path, PATHINFO_EXTENSION))
+                        : null;
 
-                    </div>
+                    $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'webp']);
+                    $isPdf = $extension === 'pdf';
+                    $isInternational = $accreditation->type === 'internasional';
+                @endphp
 
-                    <div class="rounded-2xl bg-slate-50 border border-slate-100 p-5">
+                <article
+                    class="group rounded-[2rem] bg-white border border-slate-100 shadow-xl overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition duration-300"
+                    data-aos="fade-up"
+                    data-aos-delay="{{ $loop->index * 100 }}">
 
-                        <p class="text-sm text-slate-500">
-                            Lembaga
-                        </p>
+                    {{-- Preview --}}
+                    <div class="relative bg-gradient-to-br from-blue-50 via-white to-yellow-50 p-4">
 
-                        <h3 class="mt-2 text-2xl font-bold text-yellow-500">
-                            LAM Teknik
-                        </h3>
+                        <div class="absolute top-0 left-0 w-full h-1 {{ $isInternational ? 'bg-gradient-to-r from-yellow-400 via-blue-600 to-yellow-400' : 'bg-gradient-to-r from-blue-700 via-yellow-400 to-blue-700' }}"></div>
 
-                    </div>
+                        <div class="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-md">
 
-                    <div class="rounded-2xl bg-slate-50 border border-slate-100 p-5">
+                            @if ($fileUrl && $isImage)
 
-                        <p class="text-sm text-slate-500">
-                            Berlaku
-                        </p>
+                                <a href="{{ $fileUrl }}" target="_blank">
+                                    <img
+                                        src="{{ $fileUrl }}"
+                                        alt="{{ $accreditation->title }}"
+                                        class="w-full h-56 md:h-64 object-contain bg-white p-3">
+                                </a>
 
-                        <h3 class="mt-2 text-2xl font-bold text-blue-700">
-                            2022-2027
-                        </h3>
+                            @elseif ($fileUrl && $isPdf)
 
-                    </div>
+                                <div class="h-56 md:h-64 bg-white flex flex-col items-center justify-center text-center p-6">
 
-                </div>
+                                    <div class="w-16 h-16 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-xl font-bold">
+                                        PDF
+                                    </div>
 
-            </div>
+                                    <p class="mt-4 text-lg font-bold text-slate-800">
+                                        File Sertifikat PDF
+                                    </p>
 
-            {{-- RIGHT CERTIFICATE --}}
-            <div data-aos="fade-left">
+                                    <p class="mt-2 text-sm text-slate-500">
+                                        Klik tombol lihat sertifikat untuk membuka file.
+                                    </p>
 
-                <div class="relative">
+                                </div>
 
-                    {{-- Decorative Shape --}}
-                    <div class="absolute -top-8 -right-8 w-48 h-48 rounded-full bg-yellow-200/40 blur-3xl"></div>
+                            @else
 
-                    <div class="absolute -bottom-8 -left-8 w-56 h-56 rounded-full bg-blue-200/40 blur-3xl"></div>
+                                <div class="h-56 md:h-64 bg-white flex flex-col items-center justify-center text-center p-6">
 
-                    <div class="relative rounded-3xl bg-gradient-to-br from-blue-50 via-white to-yellow-50 p-5 md:p-7 shadow-2xl border border-slate-100">
+                                    <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-xl font-bold">
+                                        A
+                                    </div>
 
-                        <div class="rounded-2xl overflow-hidden bg-white shadow-lg">
+                                    <p class="mt-4 text-lg font-bold text-slate-800">
+                                        Sertifikat belum diunggah
+                                    </p>
 
-                            <img
-                                src="{{ asset('assets/images/akreditasi.jpg') }}"
-                                alt="Sertifikat Akreditasi Teknik Mesin"
-                                class="w-full object-cover">
+                                </div>
+
+                            @endif
 
                         </div>
 
-                        <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    </div>
 
-                            <div>
 
-                                <p class="text-sm text-slate-500">
-                                    Sertifikat Akreditasi
+                    {{-- Content --}}
+                    <div class="p-6 md:p-7">
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+
+                            <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold
+                                {{ $isInternational ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700' }}">
+                                {{ $accreditation->type_label }}
+                            </span>
+
+                            @if ($accreditation->rank)
+                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
+                                    {{ $accreditation->rank }}
+                                </span>
+                            @endif
+
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-slate-800 leading-snug">
+                            {{ $accreditation->title }}
+                        </h3>
+
+                        @if ($accreditation->institution)
+                            <p class="mt-2 text-sm font-semibold text-blue-700">
+                                {{ $accreditation->institution }}
+                            </p>
+                        @endif
+
+                        @if ($accreditation->description)
+                            <p class="mt-4 text-slate-600 leading-7 text-justify">
+                                {{ \Illuminate\Support\Str::limit($accreditation->description, 220) }}
+                            </p>
+                        @endif
+
+
+                        {{-- Info Ringkas --}}
+                        <div class="grid grid-cols-2 gap-4 mt-6">
+
+                            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+
+                                <p class="text-xs text-slate-500">
+                                    Predikat
                                 </p>
 
-                                <h3 class="text-2xl font-bold text-slate-800">
-                                    D-III Teknik Mesin Polinema
-                                </h3>
+                                <h4 class="mt-1 text-base md:text-lg font-bold text-blue-700">
+                                    {{ $accreditation->rank ?? '-' }}
+                                </h4>
 
                             </div>
 
-                            <span class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-blue-700 text-white font-semibold">
-                                Unggul
-                            </span>
+                            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+
+                                <p class="text-xs text-slate-500">
+                                    Lembaga
+                                </p>
+
+                                <h4 class="mt-1 text-base md:text-lg font-bold text-yellow-500">
+                                    {{ $accreditation->institution ?? '-' }}
+                                </h4>
+
+                            </div>
+
+                            <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4 col-span-2">
+
+                                <p class="text-xs text-slate-500">
+                                    Masa Berlaku
+                                </p>
+
+                                <h4 class="mt-1 text-base md:text-lg font-bold text-slate-800">
+                                    @if ($accreditation->valid_from || $accreditation->valid_until)
+                                        {{ $formatTanggalIndonesia($accreditation->valid_from) }}
+                                        -
+                                        {{ $formatTanggalIndonesia($accreditation->valid_until) }}
+                                    @else
+                                        -
+                                    @endif
+                                </h4>
+
+                            </div>
+
+                            @if ($accreditation->certificate_number)
+
+                                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4 col-span-2">
+
+                                    <p class="text-xs text-slate-500">
+                                        Nomor Sertifikat / SK
+                                    </p>
+
+                                    <h4 class="mt-1 text-sm md:text-base font-bold text-slate-800 break-words">
+                                        {{ $accreditation->certificate_number }}
+                                    </h4>
+
+                                </div>
+
+                            @endif
 
                         </div>
 
+
+                        {{-- Buttons --}}
+                        @if ($fileUrl)
+
+                            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+
+                                <a href="{{ $fileUrl }}"
+                                    target="_blank"
+                                    class="inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 transition">
+                                    Lihat Sertifikat
+                                </a>
+
+                                <a href="{{ $fileUrl }}"
+                                    download
+                                    class="inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-slate-100 text-slate-700 text-sm font-bold hover:bg-slate-200 transition">
+                                    Download
+                                </a>
+
+                            </div>
+
+                        @endif
+
                     </div>
 
-                </div>
+                </article>
 
-            </div>
+            @endforeach
 
         </div>
 
     </div>
 
 </section>
+
+@endif
