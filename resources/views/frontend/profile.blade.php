@@ -11,11 +11,11 @@
 @include('components.profile.history')
 
 @include('components.profile.vision-mission', [
-    'section' => $profileSections['visi-misi'] ?? null
+    'section' => $profileSections['vision-mission'] ?? null
 ])
 
 @include('components.profile.tujuan-prodi', [
-    'section' => $profileSections['tujuan-prodi'] ?? null
+    'section' => $profileSections['goals'] ?? null
 ])
 
 @include('components.profile.ppm', [

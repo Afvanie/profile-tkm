@@ -10,6 +10,38 @@ class ProfileAdditionalSectionsSeeder extends Seeder
 {
     public function run(): void
     {
+                /*
+        |--------------------------------------------------------------------------
+        | Bersihkan section profil lama / duplikat
+        |--------------------------------------------------------------------------
+        */
+
+        $canonicalSlugs = [
+            'overview',
+            'history',
+            'vision-mission',
+            'goals',
+            'ppm',
+            'cpl',
+        ];
+
+        \App\Models\ProfileSection::whereNotIn('slug', $canonicalSlugs)
+            ->get()
+            ->each(function ($section) {
+                $section->items()->delete();
+                $section->delete();
+            });
+
+        foreach ($canonicalSlugs as $slug) {
+            $sections = \App\Models\ProfileSection::where('slug', $slug)
+                ->orderBy('id')
+                ->get();
+
+            $sections->skip(1)->each(function ($section) {
+                $section->items()->delete();
+                $section->delete();
+            });
+        }
         /*
         |--------------------------------------------------------------------------
         | VISI MISI
@@ -26,28 +58,35 @@ class ProfileAdditionalSectionsSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+        ProfileItem::where('profile_section_id', $visionMission->id)
+            ->where('item_group', 'visi')
+            ->update(['item_group' => 'vision']);
+
+        ProfileItem::where('profile_section_id', $visionMission->id)
+            ->where('item_group', 'misi')
+            ->update(['item_group' => 'mission']);
 
         $visionMissionItems = [
             [
-                'item_group' => 'visi',
+                'item_group' => 'vision',
                 'title' => 'Visi Program Studi',
                 'content' => 'Menjadi program studi vokasi yang unggul dalam bidang teknik mesin, berorientasi pada kebutuhan industri, perkembangan teknologi, dan menghasilkan lulusan yang profesional serta berdaya saing.',
                 'sort_order' => 1,
             ],
             [
-                'item_group' => 'misi',
+                'item_group' => 'mission',
                 'title' => 'Misi 1',
                 'content' => 'Menyelenggarakan pendidikan vokasi bidang teknik mesin yang berkualitas, berbasis praktik, dan relevan dengan kebutuhan industri.',
                 'sort_order' => 1,
             ],
             [
-                'item_group' => 'misi',
+                'item_group' => 'mission',
                 'title' => 'Misi 2',
                 'content' => 'Mengembangkan pembelajaran, penelitian terapan, dan pengabdian kepada masyarakat yang mendukung penguatan kompetensi teknik mesin.',
                 'sort_order' => 2,
             ],
             [
-                'item_group' => 'misi',
+                'item_group' => 'mission',
                 'title' => 'Misi 3',
                 'content' => 'Membangun kerja sama dengan dunia usaha, dunia industri, institusi pendidikan, dan pemangku kepentingan lainnya dalam pengembangan pendidikan vokasi.',
                 'sort_order' => 3,

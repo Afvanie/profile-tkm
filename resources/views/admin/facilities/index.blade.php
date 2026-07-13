@@ -11,7 +11,7 @@
 
         <div>
             <h1 class="text-3xl font-bold text-slate-800">
-                Dokumentasi Fasilitas
+                Dokumentasi
             </h1>
 
             <p class="mt-2 text-slate-500">
@@ -19,7 +19,7 @@
             </p>
         </div>
 
-        <a href="{{ url('/fasilitas') }}"
+        <a href="{{ url('/facilities') }}"
             target="_blank"
             class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold hover:bg-blue-800 transition">
             Lihat Halaman Fasilitas

@@ -1,8 +1,17 @@
 @if(isset($section) && $section)
 
 @php
-    $visi = $section->items->where('item_group', 'visi')->first();
-    $misi = $section->items->where('item_group', 'misi');
+    $items = $section->items ?? collect();
+
+    $visi = $items
+        ->whereIn('item_group', ['visi', 'vision'])
+        ->sortBy('sort_order')
+        ->first();
+
+    $misi = $items
+        ->whereIn('item_group', ['misi', 'mission'])
+        ->sortBy('sort_order')
+        ->values();
 @endphp
 
 <section class="relative py-24 bg-slate-50 overflow-hidden">

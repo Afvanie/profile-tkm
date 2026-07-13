@@ -167,7 +167,7 @@
 
                     <p>
 
-                        ✉ Teknikmesin@polinema.ac.id
+                        ✉ d3tm@polinema.ac.id
 
                     </p>
 
