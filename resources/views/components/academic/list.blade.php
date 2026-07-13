@@ -33,7 +33,7 @@
 
             <p class="mt-7 text-slate-600 leading-8">
                 Akses berbagai dokumen dan informasi akademik Program Studi
-                Teknik Otomotif Elektronik secara terpusat dan terstruktur.
+                D-III Teknik Mesin secara terpusat dan terstruktur.
             </p>
 
         </div>

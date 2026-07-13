@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             ProfileOverviewSeeder::class,
             ProfileHistorySeeder::class,
             ProfileAdditionalSectionsSeeder::class,
+
+            FacilitySeeder::class,
         ]);
     }
 }
