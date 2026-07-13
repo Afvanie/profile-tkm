@@ -10,9 +10,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
+
             HomeContentSeeder::class,
-            ProfileHistorySeeder::class,
+
             ProfileOverviewSeeder::class,
+            ProfileHistorySeeder::class,
+            ProfileAdditionalSectionsSeeder::class,
         ]);
     }
 }
