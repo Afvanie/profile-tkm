@@ -22,30 +22,32 @@ class HomeContentSeeder extends Seeder
             ]
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | Statistik Program Studi
+        |--------------------------------------------------------------------------
+        | Saat ini statistik hanya menampilkan:
+        | - Jumlah Laboratorium
+        | - Tahun Berdiri
+        */
+
+        HomeStatistic::whereIn('key', [
+            'students',
+            'lecturers',
+        ])->delete();
+
         $statistics = [
-            [
-                'key' => 'students',
-                'value' => '540',
-                'label' => 'Mahasiswa',
-                'sort_order' => 1,
-            ],
-            [
-                'key' => 'lecturers',
-                'value' => '65',
-                'label' => 'Dosen',
-                'sort_order' => 2,
-            ],
             [
                 'key' => 'laboratories',
                 'value' => '21',
                 'label' => 'Laboratorium',
-                'sort_order' => 3,
+                'sort_order' => 1,
             ],
             [
                 'key' => 'founded',
                 'value' => '1982',
                 'label' => 'Tahun Berdiri',
-                'sort_order' => 4,
+                'sort_order' => 2,
             ],
         ];
 

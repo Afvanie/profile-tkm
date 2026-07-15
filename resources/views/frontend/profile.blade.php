@@ -6,26 +6,42 @@
 
 @include('components.profile.hero')
 
-@include('components.profile.overview')
+@include('components.profile.quick-nav')
 
-@include('components.profile.history')
+<div id="profil-singkat" class="scroll-mt-32">
+    @include('components.profile.overview')
+</div>
 
-@include('components.profile.vision-mission', [
-    'section' => $profileSections['vision-mission'] ?? null
-])
+<div id="perjalanan-prodi" class="scroll-mt-32">
+    @include('components.profile.history')
+</div>
 
-@include('components.profile.tujuan-prodi', [
-    'section' => $profileSections['goals'] ?? null
-])
+<div id="visi-misi" class="scroll-mt-32">
+    @include('components.profile.vision-mission', [
+        'section' => $profileSections['vision-mission'] ?? null
+    ])
+</div>
 
-@include('components.profile.ppm', [
-    'section' => $profileSections['ppm'] ?? null
-])
+<div id="tujuan-prodi" class="scroll-mt-32">
+    @include('components.profile.tujuan-prodi', [
+        'section' => $profileSections['goals'] ?? null
+    ])
+</div>
 
-@include('components.profile.cpl', [
-    'section' => $profileSections['cpl'] ?? null
-])
+<div id="ppm" class="scroll-mt-32">
+    @include('components.profile.ppm', [
+        'section' => $profileSections['ppm'] ?? null
+    ])
+</div>
 
-@include('components.profile.accreditation')
+<div id="cpl" class="scroll-mt-32">
+    @include('components.profile.cpl', [
+        'section' => $profileSections['cpl'] ?? null
+    ])
+</div>
+
+<div id="akreditasi" class="scroll-mt-32">
+    @include('components.profile.accreditation')
+</div>
 
 @endsection
