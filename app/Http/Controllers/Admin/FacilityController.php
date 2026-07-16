@@ -23,8 +23,9 @@ class FacilityController extends Controller
     {
         $facility->load([
             'photos' => function ($query) {
-                $query->orderBy('sort_order');
-            }
+                $query->orderBy('sort_order')
+                    ->orderByDesc('created_at');
+            },
         ]);
 
         return view('admin.facilities.edit', compact('facility'));
@@ -39,9 +40,14 @@ class FacilityController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
-        $validated['is_active'] = $request->boolean('is_active');
-
-        $facility->update($validated);
+        $facility->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'sort_order' => $request->filled('sort_order')
+                ? (int) $validated['sort_order']
+                : $facility->sort_order,
+            'is_active' => $request->boolean('is_active'),
+        ]);
 
         return redirect()
             ->route('admin.facilities.edit', $facility)
@@ -50,19 +56,18 @@ class FacilityController extends Controller
 
     public function storePhoto(Request $request, Facility $facility)
     {
-        $validated = $request->validate([
-            'title' => 'nullable|string|max:255',
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
-            'sort_order' => 'nullable|integer|min:0',
-            'is_active' => 'nullable|boolean',
-        ]);
+        $validated = $this->validatePhotoStore($request);
 
-        $photoPath = $request->file('photo')->store('facilities', 'public');
+        $photoPath = $request
+            ->file('photo')
+            ->store('facilities', 'public');
 
         $facility->photos()->create([
             'title' => $validated['title'] ?? null,
             'photo' => $photoPath,
-            'sort_order' => $validated['sort_order'] ?? 0,
+            'sort_order' => $request->filled('sort_order')
+                ? (int) $validated['sort_order']
+                : $this->getNextPhotoSortOrder($facility),
             'is_active' => $request->boolean('is_active'),
         ]);
 
@@ -71,26 +76,62 @@ class FacilityController extends Controller
             ->with('success', 'Foto fasilitas berhasil ditambahkan.');
     }
 
+    public function storePhotoGeneral(Request $request)
+    {
+        $validated = $this->validatePhotoStore($request, true);
+
+        $facility = Facility::findOrFail($validated['facility_id']);
+
+        $photoPath = $request
+            ->file('photo')
+            ->store('facilities', 'public');
+
+        $facility->photos()->create([
+            'title' => $validated['title'] ?? null,
+            'photo' => $photoPath,
+            'sort_order' => $request->filled('sort_order')
+                ? (int) $validated['sort_order']
+                : $this->getNextPhotoSortOrder($facility),
+            'is_active' => $request->boolean('is_active'),
+        ]);
+
+        return redirect()
+            ->route('admin.facilities.index')
+            ->with('success', 'Foto dokumentasi berhasil ditambahkan.');
+    }
+
     public function updatePhoto(Request $request, FacilityPhoto $facilityPhoto)
     {
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
 
+        $photoPath = $facilityPhoto->photo;
+
         if ($request->hasFile('photo')) {
-            if ($facilityPhoto->photo && Storage::disk('public')->exists($facilityPhoto->photo)) {
+            if (
+                $facilityPhoto->photo &&
+                Storage::disk('public')->exists($facilityPhoto->photo)
+            ) {
                 Storage::disk('public')->delete($facilityPhoto->photo);
             }
 
-            $validated['photo'] = $request->file('photo')->store('facilities', 'public');
+            $photoPath = $request
+                ->file('photo')
+                ->store('facilities', 'public');
         }
 
-        $validated['is_active'] = $request->boolean('is_active');
-
-        $facilityPhoto->update($validated);
+        $facilityPhoto->update([
+            'title' => $validated['title'] ?? null,
+            'photo' => $photoPath,
+            'sort_order' => $request->filled('sort_order')
+                ? (int) $validated['sort_order']
+                : $facilityPhoto->sort_order,
+            'is_active' => $request->boolean('is_active'),
+        ]);
 
         return redirect()
             ->route('admin.facilities.edit', $facilityPhoto->facility)
@@ -101,7 +142,10 @@ class FacilityController extends Controller
     {
         $facility = $facilityPhoto->facility;
 
-        if ($facilityPhoto->photo && Storage::disk('public')->exists($facilityPhoto->photo)) {
+        if (
+            $facilityPhoto->photo &&
+            Storage::disk('public')->exists($facilityPhoto->photo)
+        ) {
             Storage::disk('public')->delete($facilityPhoto->photo);
         }
 
@@ -112,29 +156,24 @@ class FacilityController extends Controller
             ->with('success', 'Foto fasilitas berhasil dihapus.');
     }
 
-    public function storePhotoGeneral(Request $request)
+    private function validatePhotoStore(Request $request, bool $includeFacilityId = false): array
     {
-        $validated = $request->validate([
-            'facility_id' => 'required|exists:facilities,id',
+        $rules = [
             'title' => 'nullable|string|max:255',
             'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
-        ]);
+        ];
 
-        $facility = Facility::findOrFail($validated['facility_id']);
+        if ($includeFacilityId) {
+            $rules['facility_id'] = 'required|exists:facilities,id';
+        }
 
-        $photoPath = $request->file('photo')->store('facilities', 'public');
+        return $request->validate($rules);
+    }
 
-        $facility->photos()->create([
-            'title' => $validated['title'] ?? null,
-            'photo' => $photoPath,
-            'sort_order' => $validated['sort_order'] ?? 0,
-            'is_active' => $request->boolean('is_active'),
-        ]);
-
-        return redirect()
-            ->route('admin.facilities.index')
-            ->with('success', 'Foto dokumentasi berhasil ditambahkan.');
+    private function getNextPhotoSortOrder(Facility $facility): int
+    {
+        return ((int) $facility->photos()->max('sort_order')) + 1;
     }
 }

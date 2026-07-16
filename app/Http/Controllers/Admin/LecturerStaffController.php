@@ -11,7 +11,7 @@ class LecturerStaffController extends Controller
 {
     public function index(Request $request)
     {
-        $search = trim($request->get('search', ''));
+        $search = trim((string) $request->get('search', ''));
         $type = $request->get('type', 'all');
 
         $query = LecturerStaff::query();
@@ -28,7 +28,7 @@ class LecturerStaffController extends Controller
         }
 
         $lecturerStaff = $query
-            ->orderByRaw("FIELD(type, 'dosen', 'staff')")
+            ->orderByRaw("CASE WHEN type = 'dosen' THEN 0 ELSE 1 END")
             ->orderBy('name')
             ->paginate(12)
             ->withQueryString();
@@ -54,23 +54,20 @@ class LecturerStaffController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'nip' => 'nullable|string|max:100',
-            'type' => 'required|in:dosen,staff',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+        $validated = $this->validateLecturerStaff($request);
 
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('lecturer-staff', 'public');
+            $photoPath = $request
+                ->file('photo')
+                ->store('lecturer-staff', 'public');
         }
 
         LecturerStaff::create([
-            'name' => $request->name,
-            'nip' => $request->nip,
-            'type' => $request->type,
+            'name' => $validated['name'],
+            'nip' => $validated['nip'] ?? null,
+            'type' => $validated['type'],
             'photo' => $photoPath,
         ]);
 
@@ -86,27 +83,27 @@ class LecturerStaffController extends Controller
 
     public function update(Request $request, LecturerStaff $lecturerStaff)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'nip' => 'nullable|string|max:100',
-            'type' => 'required|in:dosen,staff',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+        $validated = $this->validateLecturerStaff($request);
 
         $photoPath = $lecturerStaff->photo;
 
         if ($request->hasFile('photo')) {
-            if ($lecturerStaff->photo && Storage::disk('public')->exists($lecturerStaff->photo)) {
+            if (
+                $lecturerStaff->photo &&
+                Storage::disk('public')->exists($lecturerStaff->photo)
+            ) {
                 Storage::disk('public')->delete($lecturerStaff->photo);
             }
 
-            $photoPath = $request->file('photo')->store('lecturer-staff', 'public');
+            $photoPath = $request
+                ->file('photo')
+                ->store('lecturer-staff', 'public');
         }
 
         $lecturerStaff->update([
-            'name' => $request->name,
-            'nip' => $request->nip,
-            'type' => $request->type,
+            'name' => $validated['name'],
+            'nip' => $validated['nip'] ?? null,
+            'type' => $validated['type'],
             'photo' => $photoPath,
         ]);
 
@@ -117,7 +114,10 @@ class LecturerStaffController extends Controller
 
     public function destroy(LecturerStaff $lecturerStaff)
     {
-        if ($lecturerStaff->photo && Storage::disk('public')->exists($lecturerStaff->photo)) {
+        if (
+            $lecturerStaff->photo &&
+            Storage::disk('public')->exists($lecturerStaff->photo)
+        ) {
             Storage::disk('public')->delete($lecturerStaff->photo);
         }
 
@@ -126,5 +126,15 @@ class LecturerStaffController extends Controller
         return redirect()
             ->route('admin.lecturer-staff.index')
             ->with('success', 'Data dosen/staff berhasil dihapus.');
+    }
+
+    private function validateLecturerStaff(Request $request): array
+    {
+        return $request->validate([
+            'name' => 'required|string|max:255',
+            'nip' => 'nullable|string|max:100',
+            'type' => 'required|in:dosen,staff',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
     }
 }

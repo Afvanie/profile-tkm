@@ -158,6 +158,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/profile-contents/{profileSection}', [ProfileContentController::class, 'update'])
             ->name('profile-contents.update');
 
+        Route::put('/profile-contents/{profileSection}/paragraphs', [ProfileContentController::class, 'updateParagraphs'])
+            ->name('profile-contents.paragraphs.update');
+
+        Route::put('/profile-contents/{profileSection}/items/batch', [ProfileContentController::class, 'batchUpdateItems'])
+            ->name('profile-contents.items.batch-update');
+
         Route::post('/profile-contents/{profileSection}/items', [ProfileContentController::class, 'storeItem'])
             ->name('profile-contents.items.store');
 
@@ -202,7 +208,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/facility-photos/{facilityPhoto}', [AdminFacilityController::class, 'destroyPhoto'])
             ->name('facilities.photos.destroy');
 
-        
+
+        /*
+        |--------------------------------------------------------------------------
+        | Konten Beranda
+        |--------------------------------------------------------------------------
+        */
 
         Route::get('/home-content', [AdminHomeContentController::class, 'index'])
             ->name('home-content.index');

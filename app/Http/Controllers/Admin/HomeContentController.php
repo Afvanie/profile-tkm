@@ -24,6 +24,14 @@ class HomeContentController extends Controller
             ]
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | Alias Variable
+        |--------------------------------------------------------------------------
+        | Beberapa view lama masih memakai $content.
+        | Jadi $content tetap dikirim agar tidak error undefined variable.
+        */
+
         $content = $homeContent;
 
         $statistics = HomeStatistic::orderBy('sort_order')->get();
@@ -43,8 +51,28 @@ class HomeContentController extends Controller
             'description' => 'required|string',
             'button_text' => 'nullable|string|max:255',
             'button_url' => 'nullable|string|max:255',
+
+            /*
+            |--------------------------------------------------------------------------
+            | Upload Gambar Deskripsi
+            |--------------------------------------------------------------------------
+            */
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
 
+            /*
+            |--------------------------------------------------------------------------
+            | Upload Video Hero
+            |--------------------------------------------------------------------------
+            | Maksimal 50MB.
+            | Jika hosting membatasi upload, nanti bisa dinaikkan lewat konfigurasi hosting/PHP.
+            */
+            'hero_video' => 'nullable|file|mimes:mp4,webm,mov|max:100200',
+
+            /*
+            |--------------------------------------------------------------------------
+            | Statistik
+            |--------------------------------------------------------------------------
+            */
             'statistics' => 'nullable|array',
             'statistics.*.label' => 'required|string|max:255',
             'statistics.*.value' => 'required|string|max:255',
@@ -64,6 +92,12 @@ class HomeContentController extends Controller
             'is_active' => true,
         ];
 
+        /*
+        |--------------------------------------------------------------------------
+        | Upload / Replace Gambar Deskripsi
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->hasFile('image')) {
             if ($homeContent->image && Storage::disk('public')->exists($homeContent->image)) {
                 Storage::disk('public')->delete($homeContent->image);
@@ -72,7 +106,32 @@ class HomeContentController extends Controller
             $data['image'] = $request->file('image')->store('home-content', 'public');
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Upload / Replace Video Hero
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('hero_video')) {
+            if (
+                $homeContent->hero_video_path &&
+                Storage::disk('public')->exists($homeContent->hero_video_path)
+            ) {
+                Storage::disk('public')->delete($homeContent->hero_video_path);
+            }
+
+            $data['hero_video_path'] = $request
+                ->file('hero_video')
+                ->store('home-content/videos', 'public');
+        }
+
         $homeContent->update($data);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Statistik
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->has('statistics')) {
             foreach ($request->statistics as $id => $statistic) {

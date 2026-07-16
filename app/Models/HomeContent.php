@@ -14,6 +14,7 @@ class HomeContent extends Model
         'button_text',
         'button_url',
         'image',
+        'hero_video_path',
         'is_active',
     ];
 }
