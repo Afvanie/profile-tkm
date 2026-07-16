@@ -30,6 +30,7 @@
     $internationalAccreditation = $homeAccreditations->firstWhere('type', 'internasional');
 
     $defaultType = $nationalAccreditation ? 'nasional' : 'internasional';
+    $hasAccreditationTabs = $nationalAccreditation || $internationalAccreditation;
 
     $bulanIndonesia = [
         1 => 'Januari',
@@ -114,9 +115,7 @@
                 <p class="text-gray-600 leading-8 text-justify"
                     data-aos="fade-up"
                     data-aos-delay="300">
-
                     {{ $programDescription?->description ?? 'Deskripsi program studi belum tersedia.' }}
-
                 </p>
 
                 @if ($programDescription?->button_text && $programDescription?->button_url)
@@ -124,10 +123,8 @@
                         data-aos="fade-up"
                         data-aos-delay="700"
                         class="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-xl bg-blue-700 text-white font-semibold transition-all duration-300 hover:bg-blue-800 hover:-translate-y-1 hover:shadow-xl">
-
                         {{ $programDescription->button_text }}
                         <span>→</span>
-
                     </a>
                 @endif
 
@@ -135,77 +132,73 @@
 
             {{-- IMAGE --}}
             <div data-aos="fade-left" data-aos-duration="1200">
-
-                <div class="overflow-hidden rounded-3xl shadow-2xl bg-white border border-slate-100">
-
+                <div class="overflow-hidden rounded-3xl shadow-xl bg-white border border-slate-100">
                     <img
                         src="{{ $descriptionImageUrl }}"
                         class="w-full h-[360px] object-cover transition duration-700 hover:scale-105"
                         alt="Deskripsi Program Studi">
-
                 </div>
-
             </div>
 
         </div>
 
 
         {{-- ========================================================= --}}
-        {{-- AKREDITASI DENGAN BUTTON PILIHAN --}}
+        {{-- AKREDITASI DENGAN BUTTON PILIHAN - MINIMALIS --}}
         {{-- ========================================================= --}}
 
-        @if ($homeAccreditations->count())
+        @if ($hasAccreditationTabs)
 
-            <div class="mt-32" data-accreditation-tabs>
+            <div class="mt-28" data-accreditation-tabs>
 
                 {{-- Heading --}}
-                <div class="max-w-3xl mx-auto text-center mb-12" data-aos="fade-up">
+                <div class="max-w-3xl mx-auto text-center mb-10" data-aos="fade-up">
 
-                    <span class="inline-flex items-center px-5 py-2 rounded-full bg-white border border-yellow-200 text-yellow-700 font-bold text-sm shadow-sm">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-white border border-slate-200 text-blue-700 font-bold text-xs shadow-sm">
                         Akreditasi Program Studi
                     </span>
 
-                    <h2 class="mt-5 text-4xl md:text-5xl font-black text-slate-800 leading-tight">
+                    <h2 class="mt-5 text-3xl md:text-4xl font-black text-slate-900 leading-tight">
                         Pengakuan Mutu Program Studi
                     </h2>
 
-                    <div class="w-24 h-1.5 bg-gradient-to-r from-blue-700 to-yellow-400 rounded-full mt-5 mb-6 mx-auto"></div>
+                    <div class="w-16 h-1 bg-yellow-400 rounded-full mt-5 mb-6 mx-auto"></div>
 
                     <p class="text-slate-600 leading-8">
-                        Program Studi D-III Teknik Mesin memiliki pengakuan mutu melalui
-                        akreditasi nasional maupun internasional.
+                        Informasi akreditasi Program Studi D-III Teknik Mesin sebagai bentuk pengakuan mutu
+                        penyelenggaraan pendidikan vokasi.
                     </p>
 
                 </div>
 
 
                 {{-- Button Pilihan --}}
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10" data-aos="fade-up">
+                <div class="flex justify-center mb-10" data-aos="fade-up">
+                    <div class="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 p-1.5 shadow-sm">
 
-                    @if ($nationalAccreditation)
-                        <button type="button"
-                            data-accreditation-tab="nasional"
-                            class="accreditation-tab-btn w-full sm:w-auto px-7 py-4 rounded-2xl font-bold transition-all duration-300
-                            {{ $defaultType === 'nasional'
-                                ? 'bg-blue-700 text-white shadow-xl shadow-blue-700/25'
-                                : 'bg-white text-slate-700 border border-slate-200 shadow-sm hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200' }}">
+                        @if ($nationalAccreditation)
+                            <button type="button"
+                                data-accreditation-tab="nasional"
+                                class="accreditation-tab-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300
+                                {{ $defaultType === 'nasional'
+                                    ? 'bg-blue-700 text-white shadow-md shadow-blue-700/20'
+                                    : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50' }}">
+                                Nasional
+                            </button>
+                        @endif
 
-                            Sertifikasi Nasional
-                        </button>
-                    @endif
+                        @if ($internationalAccreditation)
+                            <button type="button"
+                                data-accreditation-tab="internasional"
+                                class="accreditation-tab-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300
+                                {{ $defaultType === 'internasional'
+                                    ? 'bg-blue-700 text-white shadow-md shadow-blue-700/20'
+                                    : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50' }}">
+                                Internasional
+                            </button>
+                        @endif
 
-                    @if ($internationalAccreditation)
-                        <button type="button"
-                            data-accreditation-tab="internasional"
-                            class="accreditation-tab-btn w-full sm:w-auto px-7 py-4 rounded-2xl font-bold transition-all duration-300
-                            {{ $defaultType === 'internasional'
-                                ? 'bg-blue-700 text-white shadow-xl shadow-blue-700/25'
-                                : 'bg-white text-slate-700 border border-slate-200 shadow-sm hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200' }}">
-
-                            Sertifikasi Internasional
-                        </button>
-                    @endif
-
+                    </div>
                 </div>
 
 
@@ -219,58 +212,36 @@
                     <div data-accreditation-panel="nasional"
                         class="{{ $defaultType === 'nasional' ? 'block' : 'hidden' }}">
 
-                        <div class="relative overflow-hidden rounded-[2.25rem] bg-white border border-slate-100 shadow-2xl"
+                        <div class="max-w-5xl mx-auto rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/60 overflow-hidden"
                             data-aos="fade-up">
 
-                            {{-- Decorative Background --}}
-                            <div class="absolute inset-0 pointer-events-none">
-
-                                <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-blue-100/70 blur-3xl"></div>
-
-                                <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-yellow-100/70 blur-3xl"></div>
-
-                                <div class="absolute inset-0 opacity-[0.03]"
-                                    style="background-image: linear-gradient(#0f172a 1px, transparent 1px),
-                                    linear-gradient(to right,#0f172a 1px,transparent 1px);
-                                    background-size:60px 60px;">
-                                </div>
-
-                            </div>
-
-                            <div class="relative grid lg:grid-cols-2 gap-10 items-center p-6 md:p-8 lg:p-10">
+                            <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-0">
 
                                 {{-- Preview --}}
-                                <div class="relative">
+                                <div class="bg-slate-50 p-6 md:p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-slate-100">
 
-                                    <div class="absolute -top-5 -left-5 z-10 hidden md:block">
-                                        <span class="inline-flex items-center px-4 py-2 rounded-2xl bg-blue-700 text-white text-sm font-bold shadow-lg">
-                                            Nasional
-                                        </span>
-                                    </div>
-
-                                    <div class="rounded-[2rem] bg-gradient-to-br from-blue-50 via-white to-yellow-50 border border-slate-100 shadow-inner p-5">
-
-                                        <div class="rounded-[1.5rem] bg-white border border-slate-100 shadow-lg overflow-hidden">
+                                    <div class="w-full max-w-md">
+                                        <div class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden min-h-[420px] md:min-h-[480px] flex items-center justify-center p-4">
 
                                             @if ($nationalFile['url'] && $nationalFile['is_image'])
 
                                                 <img src="{{ $nationalFile['url'] }}"
                                                     alt="{{ $nationalAccreditation->title }}"
-                                                    class="w-full h-[320px] object-contain bg-white p-4 transition duration-700 hover:scale-[1.03]">
+                                                    class="block max-w-full max-h-[380px] md:max-h-[440px] object-contain mx-auto">
 
                                             @elseif ($nationalFile['url'] && $nationalFile['is_pdf'])
 
-                                                <div class="h-[320px] bg-white flex flex-col items-center justify-center text-center p-8">
+                                                <div class="w-full h-[380px] md:h-[440px] bg-white flex flex-col items-center justify-center text-center p-8">
 
-                                                    <div class="w-20 h-20 rounded-3xl bg-red-100 text-red-600 flex items-center justify-center text-2xl font-black">
+                                                    <div class="w-16 h-16 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl font-black">
                                                         PDF
                                                     </div>
 
-                                                    <h3 class="mt-5 text-2xl font-bold text-slate-800">
+                                                    <h3 class="mt-4 text-xl font-bold text-slate-800">
                                                         Sertifikat PDF
                                                     </h3>
 
-                                                    <p class="mt-3 text-slate-500">
+                                                    <p class="mt-2 text-sm text-slate-500">
                                                         File sertifikat tersedia dalam format PDF.
                                                     </p>
 
@@ -280,87 +251,90 @@
 
                                                 <img src="{{ asset('assets/images/akreditasi.jpg') }}"
                                                     alt="Sertifikat Akreditasi Nasional"
-                                                    class="w-full h-[320px] object-contain bg-white p-4 transition duration-700 hover:scale-[1.03]">
+                                                    class="block max-w-full max-h-[380px] md:max-h-[440px] object-contain mx-auto">
 
                                             @endif
 
                                         </div>
-
                                     </div>
 
                                 </div>
 
 
                                 {{-- Text --}}
-                                <div>
+                                <div class="p-6 md:p-8 lg:p-10 flex items-center">
 
-                                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-bold">
-                                        Akreditasi Nasional
-                                    </span>
+                                    <div class="w-full">
 
-                                    <h3 class="mt-5 text-3xl md:text-4xl font-black text-slate-800 leading-tight">
-                                        {{ $nationalAccreditation->title }}
-                                    </h3>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-bold">
+                                            Akreditasi Nasional
+                                        </span>
 
-                                    <p class="mt-3 text-blue-700 font-bold">
-                                        {{ $nationalAccreditation->institution ?? '-' }}
-                                    </p>
+                                        <h3 class="mt-4 text-2xl md:text-3xl font-black text-slate-900 leading-tight">
+                                            {{ $nationalAccreditation->title }}
+                                        </h3>
 
-                                    <p class="mt-6 text-slate-600 leading-8 text-justify">
-                                        @if ($nationalAccreditation->description)
-                                            {{ \Illuminate\Support\Str::limit($nationalAccreditation->description, 360) }}
-                                        @else
-                                            Program Studi D-III Teknik Mesin telah memperoleh akreditasi
-                                            {{ $nationalAccreditation->rank ?? '-' }}
-                                            dari {{ $nationalAccreditation->institution ?? '-' }}.
-                                        @endif
-                                    </p>
+                                        <p class="mt-2 text-sm font-bold text-blue-700">
+                                            {{ $nationalAccreditation->institution ?? '-' }}
+                                        </p>
 
-                                    <div class="grid sm:grid-cols-2 gap-4 mt-7">
-
-                                        <div class="rounded-2xl bg-blue-50 border border-blue-100 p-5 shadow-sm">
-                                            <p class="text-sm text-slate-500">
-                                                Peringkat
-                                            </p>
-
-                                            <h4 class="mt-1 text-2xl font-black text-blue-700">
+                                        <p class="mt-5 text-slate-600 leading-8 text-justify">
+                                            @if ($nationalAccreditation->description)
+                                                {{ \Illuminate\Support\Str::limit($nationalAccreditation->description, 260) }}
+                                            @else
+                                                Program Studi D-III Teknik Mesin telah memperoleh akreditasi
                                                 {{ $nationalAccreditation->rank ?? '-' }}
-                                            </h4>
+                                                dari {{ $nationalAccreditation->institution ?? '-' }}.
+                                            @endif
+                                        </p>
+
+                                        <div class="grid sm:grid-cols-2 gap-4 mt-6">
+
+                                            <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                                                <p class="text-xs font-semibold text-slate-500">
+                                                    Peringkat
+                                                </p>
+
+                                                <h4 class="mt-1 text-2xl font-black text-blue-700">
+                                                    {{ $nationalAccreditation->rank ?? '-' }}
+                                                </h4>
+                                            </div>
+
+                                            <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                                                <p class="text-xs font-semibold text-slate-500">
+                                                    Masa Berlaku
+                                                </p>
+
+                                                <h4 class="mt-1 text-sm font-black text-slate-800 leading-6">
+                                                    @if ($nationalAccreditation->valid_from || $nationalAccreditation->valid_until)
+                                                        {{ $formatTanggalIndonesia($nationalAccreditation->valid_from) }}
+                                                        -
+                                                        {{ $formatTanggalIndonesia($nationalAccreditation->valid_until) }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </h4>
+                                            </div>
+
                                         </div>
 
-                                        <div class="rounded-2xl bg-yellow-50 border border-yellow-100 p-5 shadow-sm">
-                                            <p class="text-sm text-slate-500">
-                                                Masa Berlaku
-                                            </p>
+                                        <div class="mt-7 flex flex-col sm:flex-row gap-3">
 
-                                            <h4 class="mt-1 text-base font-black text-slate-800 leading-6">
-                                                @if ($nationalAccreditation->valid_from || $nationalAccreditation->valid_until)
-                                                    {{ $formatTanggalIndonesia($nationalAccreditation->valid_from) }}
-                                                    -
-                                                    {{ $formatTanggalIndonesia($nationalAccreditation->valid_until) }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </h4>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
-
-                                        <a href="{{ url('/profile') }}"
-                                            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-700 text-white font-bold hover:bg-blue-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                                            Lihat Detail
-                                            <span>→</span>
-                                        </a>
-
-                                        @if ($nationalFile['url'])
-                                            <a href="{{ $nationalFile['url'] }}"
-                                                target="_blank"
-                                                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition-all duration-300 hover:-translate-y-1">
-                                                Lihat Sertifikat
+                                            <a href="{{ url('/profile#akreditasi') }}"
+                                                class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 transition">
+                                                Lihat Detail
+                                                <span>→</span>
                                             </a>
-                                        @endif
+
+                                            @if ($nationalFile['url'])
+                                                <a href="{{ $nationalFile['url'] }}"
+                                                    target="_blank"
+                                                    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold hover:bg-slate-50 transition">
+                                                    Lihat Sertifikat
+                                                </a>
+                                            @endif
+
+                                        </div>
 
                                     </div>
 
@@ -385,58 +359,36 @@
                     <div data-accreditation-panel="internasional"
                         class="{{ $defaultType === 'internasional' ? 'block' : 'hidden' }}">
 
-                        <div class="relative overflow-hidden rounded-[2.25rem] bg-white border border-slate-100 shadow-2xl"
+                        <div class="max-w-5xl mx-auto rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/60 overflow-hidden"
                             data-aos="fade-up">
 
-                            {{-- Decorative Background --}}
-                            <div class="absolute inset-0 pointer-events-none">
-
-                                <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-yellow-100/70 blur-3xl"></div>
-
-                                <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-blue-100/70 blur-3xl"></div>
-
-                                <div class="absolute inset-0 opacity-[0.03]"
-                                    style="background-image: linear-gradient(#0f172a 1px, transparent 1px),
-                                    linear-gradient(to right,#0f172a 1px,transparent 1px);
-                                    background-size:60px 60px;">
-                                </div>
-
-                            </div>
-
-                            <div class="relative grid lg:grid-cols-2 gap-10 items-center p-6 md:p-8 lg:p-10">
+                            <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-0">
 
                                 {{-- Preview --}}
-                                <div class="relative">
+                                <div class="bg-slate-50 p-6 md:p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-slate-100">
 
-                                    <div class="absolute -top-5 -left-5 z-10 hidden md:block">
-                                        <span class="inline-flex items-center px-4 py-2 rounded-2xl bg-yellow-500 text-white text-sm font-bold shadow-lg">
-                                            Internasional
-                                        </span>
-                                    </div>
-
-                                    <div class="rounded-[2rem] bg-gradient-to-br from-yellow-50 via-white to-blue-50 border border-slate-100 shadow-inner p-5">
-
-                                        <div class="rounded-[1.5rem] bg-white border border-slate-100 shadow-lg overflow-hidden">
+                                    <div class="w-full max-w-md">
+                                        <div class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden min-h-[420px] md:min-h-[480px] flex items-center justify-center p-4">
 
                                             @if ($internationalFile['url'] && $internationalFile['is_image'])
 
                                                 <img src="{{ $internationalFile['url'] }}"
                                                     alt="{{ $internationalAccreditation->title }}"
-                                                    class="w-full h-[320px] object-contain bg-white p-4 transition duration-700 hover:scale-[1.03]">
+                                                    class="block max-w-full max-h-[380px] md:max-h-[440px] object-contain mx-auto">
 
                                             @elseif ($internationalFile['url'] && $internationalFile['is_pdf'])
 
-                                                <div class="h-[320px] bg-white flex flex-col items-center justify-center text-center p-8">
+                                                <div class="w-full h-[380px] md:h-[440px] bg-white flex flex-col items-center justify-center text-center p-8">
 
-                                                    <div class="w-20 h-20 rounded-3xl bg-red-100 text-red-600 flex items-center justify-center text-2xl font-black">
+                                                    <div class="w-16 h-16 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl font-black">
                                                         PDF
                                                     </div>
 
-                                                    <h3 class="mt-5 text-2xl font-bold text-slate-800">
+                                                    <h3 class="mt-4 text-xl font-bold text-slate-800">
                                                         Sertifikat PDF
                                                     </h3>
 
-                                                    <p class="mt-3 text-slate-500">
+                                                    <p class="mt-2 text-sm text-slate-500">
                                                         File sertifikat tersedia dalam format PDF.
                                                     </p>
 
@@ -444,17 +396,17 @@
 
                                             @else
 
-                                                <div class="h-[320px] bg-white flex flex-col items-center justify-center text-center p-8">
+                                                <div class="w-full h-[380px] md:h-[440px] bg-white flex flex-col items-center justify-center text-center p-8">
 
-                                                    <div class="w-20 h-20 rounded-3xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-3xl font-black">
+                                                    <div class="w-16 h-16 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-2xl font-black">
                                                         A
                                                     </div>
 
-                                                    <h3 class="mt-5 text-2xl font-bold text-slate-800">
+                                                    <h3 class="mt-4 text-xl font-bold text-slate-800">
                                                         Sertifikat Internasional
                                                     </h3>
 
-                                                    <p class="mt-3 text-slate-500">
+                                                    <p class="mt-2 text-sm text-slate-500">
                                                         File sertifikat dapat ditambahkan melalui admin.
                                                     </p>
 
@@ -463,81 +415,84 @@
                                             @endif
 
                                         </div>
-
                                     </div>
 
                                 </div>
 
 
                                 {{-- Text --}}
-                                <div>
+                                <div class="p-6 md:p-8 lg:p-10 flex items-center">
 
-                                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-yellow-100 text-yellow-700 text-sm font-bold">
-                                        Akreditasi Internasional
-                                    </span>
+                                    <div class="w-full">
 
-                                    <h3 class="mt-5 text-3xl md:text-4xl font-black text-slate-800 leading-tight">
-                                        {{ $internationalAccreditation->title }}
-                                    </h3>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-bold">
+                                            Akreditasi Internasional
+                                        </span>
 
-                                    <p class="mt-3 text-yellow-700 font-bold">
-                                        {{ $internationalAccreditation->institution ?? '-' }}
-                                    </p>
+                                        <h3 class="mt-4 text-2xl md:text-3xl font-black text-slate-900 leading-tight">
+                                            {{ $internationalAccreditation->title }}
+                                        </h3>
 
-                                    <p class="mt-6 text-slate-600 leading-8 text-justify">
-                                        @if ($internationalAccreditation->description)
-                                            {{ \Illuminate\Support\Str::limit($internationalAccreditation->description, 360) }}
-                                        @else
-                                            Program Studi D-III Teknik Mesin memperoleh pengakuan internasional
-                                            dari {{ $internationalAccreditation->institution ?? '-' }}.
-                                        @endif
-                                    </p>
+                                        <p class="mt-2 text-sm font-bold text-blue-700">
+                                            {{ $internationalAccreditation->institution ?? '-' }}
+                                        </p>
 
-                                    <div class="grid sm:grid-cols-2 gap-4 mt-7">
+                                        <p class="mt-5 text-slate-600 leading-8 text-justify">
+                                            @if ($internationalAccreditation->description)
+                                                {{ \Illuminate\Support\Str::limit($internationalAccreditation->description, 260) }}
+                                            @else
+                                                Program Studi D-III Teknik Mesin memperoleh pengakuan internasional
+                                                dari {{ $internationalAccreditation->institution ?? '-' }}.
+                                            @endif
+                                        </p>
 
-                                        <div class="rounded-2xl bg-yellow-50 border border-yellow-100 p-5 shadow-sm">
-                                            <p class="text-sm text-slate-500">
-                                                Status
-                                            </p>
+                                        <div class="grid sm:grid-cols-2 gap-4 mt-6">
 
-                                            <h4 class="mt-1 text-2xl font-black text-yellow-700">
-                                                {{ $internationalAccreditation->rank ?? '-' }}
-                                            </h4>
+                                            <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                                                <p class="text-xs font-semibold text-slate-500">
+                                                    Status
+                                                </p>
+
+                                                <h4 class="mt-1 text-2xl font-black text-blue-700">
+                                                    {{ $internationalAccreditation->rank ?? '-' }}
+                                                </h4>
+                                            </div>
+
+                                            <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                                                <p class="text-xs font-semibold text-slate-500">
+                                                    Masa Berlaku
+                                                </p>
+
+                                                <h4 class="mt-1 text-sm font-black text-slate-800 leading-6">
+                                                    @if ($internationalAccreditation->valid_from || $internationalAccreditation->valid_until)
+                                                        {{ $formatTanggalIndonesia($internationalAccreditation->valid_from) }}
+                                                        -
+                                                        {{ $formatTanggalIndonesia($internationalAccreditation->valid_until) }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </h4>
+                                            </div>
+
                                         </div>
 
-                                        <div class="rounded-2xl bg-blue-50 border border-blue-100 p-5 shadow-sm">
-                                            <p class="text-sm text-slate-500">
-                                                Masa Berlaku
-                                            </p>
+                                        <div class="mt-7 flex flex-col sm:flex-row gap-3">
 
-                                            <h4 class="mt-1 text-base font-black text-slate-800 leading-6">
-                                                @if ($internationalAccreditation->valid_from || $internationalAccreditation->valid_until)
-                                                    {{ $formatTanggalIndonesia($internationalAccreditation->valid_from) }}
-                                                    -
-                                                    {{ $formatTanggalIndonesia($internationalAccreditation->valid_until) }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </h4>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
-
-                                        <a href="{{ url('/profile') }}"
-                                            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-700 text-white font-bold hover:bg-blue-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                                            Lihat Detail
-                                            <span>→</span>
-                                        </a>
-
-                                        @if ($internationalFile['url'])
-                                            <a href="{{ $internationalFile['url'] }}"
-                                                target="_blank"
-                                                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition-all duration-300 hover:-translate-y-1">
-                                                Lihat Sertifikat
+                                            <a href="{{ url('/profile#akreditasi') }}"
+                                                class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 transition">
+                                                Lihat Detail
+                                                <span>→</span>
                                             </a>
-                                        @endif
+
+                                            @if ($internationalFile['url'])
+                                                <a href="{{ $internationalFile['url'] }}"
+                                                    target="_blank"
+                                                    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-bold hover:bg-slate-50 transition">
+                                                    Lihat Sertifikat
+                                                </a>
+                                            @endif
+
+                                        </div>
 
                                     </div>
 
@@ -571,39 +526,44 @@
         const buttons = wrapper.querySelectorAll('[data-accreditation-tab]');
         const panels = wrapper.querySelectorAll('[data-accreditation-panel]');
 
+        function resetButtons() {
+            buttons.forEach(function (button) {
+                button.classList.remove(
+                    'bg-blue-700',
+                    'text-white',
+                    'shadow-md',
+                    'shadow-blue-700/20'
+                );
+
+                button.classList.add(
+                    'text-slate-600',
+                    'hover:text-blue-700',
+                    'hover:bg-blue-50'
+                );
+            });
+        }
+
+        function activateButton(button) {
+            button.classList.remove(
+                'text-slate-600',
+                'hover:text-blue-700',
+                'hover:bg-blue-50'
+            );
+
+            button.classList.add(
+                'bg-blue-700',
+                'text-white',
+                'shadow-md',
+                'shadow-blue-700/20'
+            );
+        }
+
         buttons.forEach(function (button) {
             button.addEventListener('click', function () {
                 const target = button.getAttribute('data-accreditation-tab');
 
-                buttons.forEach(function (btn) {
-                    btn.classList.remove(
-                        'bg-blue-700',
-                        'text-white',
-                        'shadow-xl',
-                        'shadow-blue-700/25'
-                    );
-
-                    btn.classList.add(
-                        'bg-white',
-                        'text-slate-700',
-                        'border',
-                        'border-slate-200'
-                    );
-                });
-
-                button.classList.remove(
-                    'bg-white',
-                    'text-slate-700',
-                    'border',
-                    'border-slate-200'
-                );
-
-                button.classList.add(
-                    'bg-blue-700',
-                    'text-white',
-                    'shadow-xl',
-                    'shadow-blue-700/25'
-                );
+                resetButtons();
+                activateButton(button);
 
                 panels.forEach(function (panel) {
                     if (panel.getAttribute('data-accreditation-panel') === target) {
