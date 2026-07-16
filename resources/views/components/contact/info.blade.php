@@ -8,7 +8,7 @@
         ],
         [
             'title' => 'Email',
-            'value' => 'd3teknikmesin@polinema.ac.id',
+            'value' => 'd3tm@polinema.ac.id',
             'description' => 'Silakan sesuaikan dengan email resmi program studi.',
             'icon' => 'email',
         ],
@@ -21,7 +21,7 @@
         [
             'title' => 'Jam Layanan',
             'value' => 'Senin - Jumat',
-            'description' => '08.00 - 16.00 WIB',
+            'description' => '07.00 - 16.00 WIB',
             'icon' => 'clock',
         ],
     ];

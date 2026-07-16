@@ -1,6 +1,64 @@
+<style>
+    #navbar {
+        color: #ffffff;
+    }
+
+    #navbar .navbar-logo-title,
+    #navbar .navbar-logo-subtitle,
+    #navbar .nav-link {
+        transition: color 0.25s ease;
+    }
+
+    #navbar .nav-link {
+        position: relative;
+        color: #ffffff;
+    }
+
+    #navbar .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 0;
+        height: 2px;
+        border-radius: 999px;
+        background: #facc15;
+        transform: translateX(-50%);
+        transition: width 0.25s ease;
+    }
+
+    /* Saat navbar masih transparan di atas hero */
+    #navbar:not(.navbar-scrolled) .nav-link:hover,
+    #navbar:not(.navbar-scrolled) .nav-link.active {
+        color: #facc15;
+    }
+
+    /* Saat navbar sudah scroll dan background putih */
+    #navbar.navbar-scrolled .navbar-logo-title {
+        color: #0f172a;
+    }
+
+    #navbar.navbar-scrolled .navbar-logo-subtitle {
+        color: #475569;
+    }
+
+    #navbar.navbar-scrolled .nav-link {
+        color: #1e293b;
+    }
+
+    #navbar.navbar-scrolled .nav-link:hover,
+    #navbar.navbar-scrolled .nav-link.active {
+        color: #1d4ed8;
+    }
+
+    #navbar.navbar-scrolled .nav-link.active::after {
+        width: 70%;
+    }
+</style>
+
 <nav
     id="navbar"
-    class="fixed top-0 left-0 w-full z-[9000] transition-all duration-300 text-white">
+    class="fixed top-0 left-0 w-full z-[9000] transition-all duration-300">
 
     <div class="max-w-7xl mx-auto px-6">
 
@@ -19,16 +77,16 @@
                 <div class="leading-tight min-w-0">
 
                     {{-- Mobile Text --}}
-                    <h1 class="md:hidden font-extrabold text-[13px] uppercase tracking-tight leading-[1.15]">
+                    <h1 class="navbar-logo-title md:hidden font-extrabold text-[13px] uppercase tracking-tight leading-[1.15]">
                         D-III Teknik Mesin
                     </h1>
 
                     {{-- Desktop Text --}}
-                    <h1 class="hidden md:block font-extrabold text-lg md:text-xl uppercase tracking-tight">
+                    <h1 class="navbar-logo-title hidden md:block font-extrabold text-lg md:text-xl uppercase tracking-tight">
                         D-III Teknik Mesin
                     </h1>
 
-                    <p class="text-[11px] md:text-sm font-semibold opacity-90 mt-0.5">
+                    <p class="navbar-logo-subtitle text-[11px] md:text-sm font-semibold opacity-90 mt-0.5">
                         POLINEMA
                     </p>
 
@@ -40,17 +98,17 @@
             <div class="hidden md:flex items-center gap-8 font-semibold">
 
                 <a href="{{ route('home') }}"
-                    class="transition {{ request()->routeIs('home') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                    class="nav-link transition {{ request()->routeIs('home') ? 'active' : '' }}">
                     Beranda
                 </a>
 
                 <a href="{{ route('profile') }}"
-                    class="transition {{ request()->routeIs('profile') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                    class="nav-link transition {{ request()->routeIs('profile') ? 'active' : '' }}">
                     Profil TM
                 </a>
 
                 <a href="{{ route('lecturers') }}"
-                    class="transition {{ request()->routeIs('lecturers') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                    class="nav-link transition {{ request()->routeIs('lecturers') ? 'active' : '' }}">
                     Dosen & Staff
                 </a>
 
@@ -58,7 +116,7 @@
                 <div class="relative group">
 
                     <button type="button"
-                        class="flex items-center gap-1 transition {{ request()->routeIs('academic.*') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                        class="nav-link flex items-center gap-1 transition {{ request()->routeIs('academic') || request()->routeIs('academic.*') ? 'active' : '' }}">
                         Akademik
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </button>
@@ -110,12 +168,12 @@
 
                 {{-- Fasilitas Button --}}
                 <a href="{{ url('/facilities') }}"
-                    class="transition {{ request()->is('facilities*') || request()->is('fasilitas*') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                    class="nav-link transition {{ request()->is('facilities*') || request()->is('fasilitas*') ? 'active' : '' }}">
                     Fasilitas
                 </a>
 
                 <a href="{{ url('/contact') }}"
-                    class="transition {{ request()->is('contact*') || request()->is('kontak*') ? 'text-yellow-400' : 'hover:text-yellow-400' }}">
+                    class="nav-link transition {{ request()->is('contact*') || request()->is('kontak*') ? 'active' : '' }}">
                     Kontak
                 </a>
 
@@ -333,3 +391,56 @@
     </div>
 
 </aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.getElementById('navbar');
+        const mobileButton = document.getElementById('mobileButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function handleNavbarScroll() {
+            if (!navbar) {
+                return;
+            }
+
+            if (window.scrollY > 50) {
+                navbar.classList.add(
+                    'navbar-scrolled',
+                    'bg-white',
+                    'shadow-md',
+                    'shadow-slate-900/5'
+                );
+            } else {
+                navbar.classList.remove(
+                    'navbar-scrolled',
+                    'bg-white',
+                    'shadow-md',
+                    'shadow-slate-900/5'
+                );
+            }
+        }
+
+        function openMobileMenu() {
+            if (!mobileMenu || !mobileOverlay) {
+                return;
+            }
+
+            mobileMenu.classList.remove('translate-x-full');
+            mobileMenu.classList.add('translate-x-0');
+
+            mobileOverlay.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+            mobileOverlay.classList.add('opacity-100');
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+        handleNavbarScroll();
+
+        window.addEventListener('scroll', handleNavbarScroll);
+
+        if (mobileButton) {
+            mobileButton.addEventListener('click', openMobileMenu);
+        }
+    });
+</script>
