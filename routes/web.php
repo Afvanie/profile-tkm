@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\LecturerStaffController;
 use App\Http\Controllers\Frontend\AcademicController;
 use App\Http\Controllers\Frontend\FacilityController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\ContactMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,8 @@ Route::get('/facilities', [FacilityController::class, 'index'])
 
 Route::get('/contact', [ContactController::class, 'index'])
     ->name('contact');
+Route::post('/contact/send', [ContactMessageController::class, 'send'])
+    ->name('contact.send');
 
 
 /*

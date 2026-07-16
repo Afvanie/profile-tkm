@@ -40,7 +40,7 @@
 
                 <div class="mt-8 space-y-4">
 
-                    <div class="flex items-start gap-4 rounded-2xl bg-slate-50 border border-slate-100 p-5">
+                    <div class="flex items-start gap-4 rounded-2xl bg-blue-50 border border-blue-100 p-5">
 
                         <div class="w-11 h-11 rounded-xl bg-blue-700 text-white flex items-center justify-center shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -52,18 +52,18 @@
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M13 16h-1v-4h-1m1-4h.01M12 22a10 10 0 100-20 10 10 0 000 20z" />
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V8a2 2 0 00-2-2H3a2 2 0 00-2 2v6a2 2 0 002 2z" />
                             </svg>
                         </div>
 
                         <div>
                             <h3 class="font-bold text-slate-800">
-                                Catatan
+                                Email Tujuan
                             </h3>
 
                             <p class="mt-1 text-slate-600 leading-7">
-                                Form ini untuk sementara masih tampilan statis.
-                                Nanti bisa dihubungkan ke email, database, atau dashboard admin.
+                                Pesan yang dikirim melalui form ini akan diteruskan ke email Program Studi:
+                                <span class="font-bold text-blue-700">d3tm@polinema.ac.id</span>.
                             </p>
                         </div>
 
@@ -118,7 +118,38 @@
                             Isi data berikut untuk mengirim pesan kepada Program Studi D-III Teknik Mesin.
                         </p>
 
-                        <form id="contactForm" class="mt-8 space-y-6">
+                        {{-- Success --}}
+                        @if (session('success'))
+                            <div class="mt-6 rounded-2xl bg-green-50 border border-green-100 p-5 text-green-700 font-semibold leading-7">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        {{-- Error --}}
+                        @if ($errors->any())
+                            <div class="mt-6 rounded-2xl bg-red-50 border border-red-100 p-5 text-red-700 leading-7">
+
+                                <h4 class="font-bold mb-2">
+                                    Ada data yang perlu diperbaiki:
+                                </h4>
+
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    @foreach ($errors->all() as $error)
+                                        <li>
+                                            {{ $error }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                            </div>
+                        @endif
+
+                        <form id="contactForm"
+                              action="{{ route('contact.send') }}"
+                              method="POST"
+                              class="mt-8 space-y-6">
+
+                            @csrf
 
                             <div class="grid md:grid-cols-2 gap-6">
 
@@ -130,7 +161,9 @@
                                     <input
                                         type="text"
                                         name="name"
+                                        value="{{ old('name') }}"
                                         placeholder="Masukkan nama lengkap"
+                                        required
                                         class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
 
@@ -142,7 +175,9 @@
                                     <input
                                         type="email"
                                         name="email"
+                                        value="{{ old('email') }}"
                                         placeholder="Masukkan email"
+                                        required
                                         class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
 
@@ -156,6 +191,7 @@
                                 <input
                                     type="text"
                                     name="subject"
+                                    value="{{ old('subject') }}"
                                     placeholder="Masukkan subjek pesan"
                                     class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
@@ -169,11 +205,13 @@
                                     name="message"
                                     rows="6"
                                     placeholder="Tulis pesan Anda"
-                                    class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                                    required
+                                    class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('message') }}</textarea>
                             </div>
 
                             <button
                                 type="submit"
+                                id="contactSubmitButton"
                                 class="inline-flex items-center justify-center gap-3 rounded-2xl bg-blue-700 px-7 py-4 text-white font-bold shadow-lg hover:bg-blue-800 hover:-translate-y-1 transition-all duration-300">
 
                                 Kirim Pesan
@@ -194,14 +232,6 @@
 
                         </form>
 
-                        <div
-                            id="contactAlert"
-                            class="hidden mt-6 rounded-2xl bg-blue-50 border border-blue-100 p-5 text-blue-700 leading-7">
-
-                            Form kontak saat ini masih berupa tampilan statis. Fitur pengiriman pesan dapat dihubungkan ke backend pada tahap berikutnya.
-
-                        </div>
-
                     </div>
 
                 </div>
@@ -217,21 +247,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('contactForm');
-        const alertBox = document.getElementById('contactAlert');
+        const button = document.getElementById('contactSubmitButton');
 
-        if (!form || !alertBox) {
+        if (!form || !button) {
             return;
         }
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            alertBox.classList.remove('hidden');
-
-            alertBox.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
+        form.addEventListener('submit', function () {
+            button.disabled = true;
+            button.classList.add('opacity-70', 'cursor-not-allowed');
+            button.innerText = 'Mengirim Pesan...';
         });
     });
 </script>
